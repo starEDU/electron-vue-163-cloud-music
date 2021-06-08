@@ -10,6 +10,8 @@ import {
     Spin,
     Row,
     Col,
+    Modal,
+
 } from "ant-design-vue"
 
 import {
@@ -28,7 +30,26 @@ import {
     MinusOutlined,
     SwitcherOutlined,
     BorderOutlined,
+    QqOutlined,
+    MailOutlined,
+    CalendarOutlined,
+    AppstoreOutlined,
+    HeartTwoTone,
+    FrownOutlined,
+    TeamOutlined,
+    VideoCameraAddOutlined,
+    RedditOutlined,
+    WifiOutlined,
+    CloudDownloadOutlined,
+    CloudUploadOutlined,
+    UserAddOutlined,
+    CustomerServiceOutlined,
+    HeartOutlined,
+    PlayCircleOutlined,
+
 }  from "@ant-design/icons-vue"
+
+import MenuIcon from "../components/MenuIcon/MenuIcon"
 
 
 export default {
@@ -48,6 +69,23 @@ export default {
         App.component('MinusOutlined',MinusOutlined)
         App.component('SwitcherOutlined',SwitcherOutlined)
         App.component('BorderOutlined',BorderOutlined)
+        App.component('QqOutlined',QqOutlined)
+        App.component('MailOutlined',MailOutlined)
+        App.component('CalendarOutlined',CalendarOutlined)
+        App.component('AppstoreOutlined',AppstoreOutlined)
+        App.component('HeartTwoTone',HeartTwoTone)
+        App.component('FrownOutlined',FrownOutlined)
+        App.component('TeamOutlined',TeamOutlined)
+        App.component('VideoCameraAddOutlined',VideoCameraAddOutlined)
+        App.component('RedditOutlined',RedditOutlined)
+        App.component('WifiOutlined',WifiOutlined)
+        App.component('CloudDownloadOutlined',CloudDownloadOutlined)
+        App.component('CloudUploadOutlined',CloudUploadOutlined)
+        App.component('UserAddOutlined',UserAddOutlined)
+        App.component('CustomerServiceOutlined',CustomerServiceOutlined)
+        App.component('HeartOutlined',HeartOutlined)
+        App.component('PlayCircleOutlined',PlayCircleOutlined)
+        App.component('MenuIcon',MenuIcon)
         App
             .use(Button)
             .use(Layout)
@@ -59,6 +97,11 @@ export default {
             .use(Row)
             .use(Col)
 
+        App.config.globalProperties.$info = Modal.info
+        App.config.globalProperties.$success = Modal.success
+        App.config.globalProperties.$error = Modal.error
+        App.config.globalProperties.$warning = Modal.warning
+        App.config.globalProperties.$confirm = Modal.confirm
     }
 
 }

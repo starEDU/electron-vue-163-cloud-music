@@ -9,8 +9,10 @@
         <a-layout>
             <a-layout-sider class="basic-layout-sider" :width="siderWidth">
                 <div ref="handle" class="split-handle"></div>
-<!--                <basic-sider />-->
-                <h2>侧边栏</h2>
+                <!--<h2>侧边栏</h2>-->
+                <BasicSiderIndex />
+                <!--<h2>侧边栏</h2>-->
+
             </a-layout-sider>
             <a-layout-content class="basic-layout-content">
 <!--                <keep-alive
@@ -20,7 +22,7 @@
                     <router-view v-if="!refresh"></router-view>
                 </keep-alive>-->
             <!-- <offline v-else />-->
-                <h3>右边内容</h3>
+<!--                <h3>右边内容</h3>-->
                 <router-view></router-view>
             </a-layout-content>
         </a-layout>
@@ -39,11 +41,12 @@
 <script>
 
 import BasicHeaderIndex from "@/components/BasicHeader/BasicHeaderIndex"
+import BasicSiderIndex from "@/components/BasicSider/BasicSiderIndex"
 
 
 export default {
     name: 'Home',
-    components: {BasicHeaderIndex},
+    components: {BasicSiderIndex, BasicHeaderIndex},
     setup(){
 
         return {
