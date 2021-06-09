@@ -1,10 +1,10 @@
 <template>
-<h1>发现音乐</h1>
+<h1>歌手</h1>
 </template>
 
 <script>
 export default {
-    name: "DiscoverMusicPage"
+    name: "SingerPage"
 }
 </script>
 

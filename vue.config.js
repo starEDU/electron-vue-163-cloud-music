@@ -24,6 +24,7 @@ module.exports = {
                         'border-radius-base': '4px',
                     },
                     javascriptEnabled: true,
+                    javascript: true,
                 },
             },
         },

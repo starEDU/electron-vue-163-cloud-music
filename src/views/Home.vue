@@ -7,22 +7,22 @@
             <BasicHeaderIndex />
         </a-layout-header>
         <a-layout>
-            <a-layout-sider class="basic-layout-sider" :width="siderWidth">
-                <div ref="handle" class="split-handle"></div>
+            <a-layout-sider class="basic-layout-sider" :width="sideWidth">
+                <div ref="dragSideSize" class="split-handle"></div>
                 <!--<h2>侧边栏</h2>-->
                 <BasicSiderIndex />
                 <!--<h2>侧边栏</h2>-->
 
             </a-layout-sider>
             <a-layout-content class="basic-layout-content">
-<!--                <keep-alive
-                    :exclude="keepAliveExcludeList"
-                    v-if="isOnline || noLimitRoutes.includes($route.name)"
-                >
-                    <router-view v-if="!refresh"></router-view>
-                </keep-alive>-->
-            <!-- <offline v-else />-->
-<!--                <h3>右边内容</h3>-->
+                <!--
+                    <keep-alive
+                        :exclude="keepAliveExcludeList"
+                        v-if="isOnline || noLimitRoutes.includes($route.name)"
+                    ></keep-alive>
+                -->
+                <!-- <offline v-else />-->
+                <!--<h3>右边内容</h3>-->
                 <router-view></router-view>
             </a-layout-content>
         </a-layout>
@@ -39,6 +39,9 @@
 </template>
 
 <script>
+import {onMounted,reactive,ref,onUnmounted,} from "vue"
+
+import throttle from "loadsh/throttle"
 
 import BasicHeaderIndex from "@/components/BasicHeader/BasicHeaderIndex"
 import BasicSiderIndex from "@/components/BasicSider/BasicSiderIndex"
@@ -48,10 +51,48 @@ export default {
     name: 'Home',
     components: {BasicSiderIndex, BasicHeaderIndex},
     setup(){
+        const mouse = reactive({})
+        const dragSideSize = ref(null)
+        let appEle = null
+
+        const sideDefaultWidth = 200
+        const sideWidth = ref(sideDefaultWidth)
+        const sideMaxWidth = ref(400)
+
+        onMounted(()=>{
+            appEle = document.getElementById("app")
+
+            dragSideSize.value.onmousedown = (e) => {
+                mouse.isDown = true
+                mouse.startX = e.pageX
+            }
+            appEle.onmousemove = throttle(
+                (e) => {
+                    if (!mouse.isDown) return
+                    let diffX = e.pageX
+                    if (diffX < sideDefaultWidth || diffX > sideMaxWidth.value) return
+                    sideWidth.value = diffX
+                },
+                100,
+                { trailing: true, leading: true }
+            );
+            appEle.onmouseup = () => {
+                mouse.isDown = false;
+            };
+
+        })
+
+        onUnmounted(()=>{
+            dragSideSize.value = null
+            appEle.dragSideSize = null
+            appEle.onmousemove = appEle.onmouseup = null
+        })
 
         return {
             platform: process.platform,
             siderWidth: 200,
+            dragSideSize,
+            sideWidth,
         }
     }
 }

@@ -14,8 +14,11 @@
   "main": "background.js",
   "dependencies": {
     "@ant-design/icons-vue": "^6.0.1",
+    "@electron/remote": "^1.1.0",
     "ant-design-vue": "2.1.6",
     "core-js": "^3.6.5",
+    "loadsh": "^0.0.4",
+    "swiper": "^6.7.0",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
     "vue3-lazyload": "^0.2.2-beta",

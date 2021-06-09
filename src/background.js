@@ -14,7 +14,7 @@ protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
 ])
 
-
+require('@electron/remote/main').initialize()
 
 async function createWindow() {
   // Create the browser window.

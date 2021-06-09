@@ -1,7 +1,7 @@
 let recommendRoutes = [
     {
         path: "/discover_music",
-        component: () =>import(/* webpackChunkName: "home" */ "@/views/DiscoverMusicPage"),
+        component: () =>import(/* webpackChunkName: "home" */ "@/views/SideRecommend/DiscoverMusicPage"),
         name: "discover_music",
         meta: {
             title: '发现音乐',

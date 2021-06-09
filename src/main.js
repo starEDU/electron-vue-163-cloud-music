@@ -7,10 +7,11 @@ import store from './store'
 import axiosPlugin from './plugins/axiosPlugin'
 import antdPlugin from "@/plugins/antdPlugin"
 import imgLazyPlugin from "@/plugins/imgLazyPlugin"
-
+import globalPlugin from "@/plugins/globalPlugin"
 
 createApp(App)
     .use(axiosPlugin)
     .use(antdPlugin)
     .use(imgLazyPlugin)
+    .use(globalPlugin)
     .use(store).use(router).mount('#app')

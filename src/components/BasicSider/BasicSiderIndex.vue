@@ -4,7 +4,6 @@
         :class="{ borderB: true }"
     >
         <a-menu
-            style="width: 200px"
             v-model:openKeys="openKeys"
             v-model:selectedKeys="selectedKeys"
             mode="inline"
@@ -133,6 +132,7 @@ export default {
 .basic-sider{
     background: #fff;
 
+    //左侧菜单-左边框
     /deep/ .ant-menu-item-selected {color:rgba(0, 0, 0, 0.95)}
     /deep/ .ant-menu-vertical .ant-menu-item::after,
     /deep/ .ant-menu-vertical-left .ant-menu-item::after,

@@ -11,7 +11,8 @@ import {
     Row,
     Col,
     Modal,
-
+    Tabs,
+    Tag,
 } from "ant-design-vue"
 
 import {
@@ -46,7 +47,8 @@ import {
     CustomerServiceOutlined,
     HeartOutlined,
     PlayCircleOutlined,
-
+    LeftCircleOutlined,
+    RightCircleOutlined,
 }  from "@ant-design/icons-vue"
 
 import MenuIcon from "../components/MenuIcon/MenuIcon"
@@ -86,6 +88,10 @@ export default {
         App.component('HeartOutlined',HeartOutlined)
         App.component('PlayCircleOutlined',PlayCircleOutlined)
         App.component('MenuIcon',MenuIcon)
+        App.component('LeftCircleOutlined',LeftCircleOutlined)
+        App.component('RightCircleOutlined',RightCircleOutlined)
+
+
         App
             .use(Button)
             .use(Layout)
@@ -96,6 +102,8 @@ export default {
             .use(Spin)
             .use(Row)
             .use(Col)
+            .use(Tabs)
+            .use(Tag)
 
         App.config.globalProperties.$info = Modal.info
         App.config.globalProperties.$success = Modal.success
