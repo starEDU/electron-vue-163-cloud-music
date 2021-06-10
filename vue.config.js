@@ -1,6 +1,17 @@
 const isProd = process.env.NODE_ENV === "production";
 
 module.exports = {
+    devServer:{
+        "proxy": {
+            "/api": {
+                "target": "http://h5sm.com:8088",
+                "changeOrigin": true, // 开启跨域,
+                "pathRewrite": { "^/api" : "" },
+                // ws: true,        //如果要代理 websockets，配置这个参数
+                // secure: false,  // 如果是https接口，需要配置这个参数
+            }
+        }
+    },
     pluginOptions: {
         electronBuilder: {
             nodeIntegration: true,

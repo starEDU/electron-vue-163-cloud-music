@@ -8,22 +8,21 @@
                         item.picUrl ||
                         item.imgurl16v9 ||
                         item.cover ||
-                        item.coverUrl
+                        item.coverUrl ||
+                        item.coverImgUrl
                     }?param=${imgParam}`
                 "
             />
             <div class="top" v-if="item.playCount || item.playTime">
-                <a-icon type="customer-service" />
-                {{ item.playCount | toWan }}
-                <!-- {{item.playCount | toWan || item.playTime | toWan}} -->
+                <CustomerServiceOutlined />
+                {{ toWan(item.playCount) }}
+<!--                 {{item.playCount | toWan || item.playTime | toWan}}-->
             </div>
             <div class="bottom" v-if="item.creator">
-                <a-icon type="user" />
-                <span>{{
-                        item.creator.nickname || item.creator[0].userName
-                    }}</span>
+                <UserOutlined />
+                <span>{{item.creator.nickname || item.creator[0].userName}}</span>
             </div>
-            <a-icon type="play-circle" class="play-icon" />
+            <PlayCircleOutlined class="play-icon"/>
             <slot name="copywriter"></slot>
         </div>
         <div class="intro" @click="goRoute">
@@ -34,7 +33,11 @@
 </template>
 
 <script>
+
+
+
 export default {
+    name: 'ListItem',
     props: {
         layout: { type: String, default: "" },
         ratio: { type: Number, default: 1 }, // 图片高宽比
@@ -48,13 +51,16 @@ export default {
         },
         imgParam: { type: String, default: "200y200" },
     },
+
     methods: {
+        toWan (num) {
+            return num >= 10000 ? (num / 10000).toFixed(1) + "万" : num
+        },
         goRoute() {
             if (this.item.url) {
                 window.open(this.item.url);
             } else if (
-                this.itemType == "mv" &&
-                typeof this.item.id == "number"
+                this.itemType == "mv" && typeof this.item.id == "number"
             ) {
                 this.$router.push(`/mv/${this.item.id}`);
             } else if (this.itemType == "video") {
@@ -65,6 +71,7 @@ export default {
         },
     },
     computed: {
+
         itemCls() {
             return this.layout == "horizon" ? "item horizon" : "item";
         },
@@ -97,6 +104,9 @@ export default {
     flex-direction: column;
     _margin-bottom: 20px;
     overflow: hidden;
+
+
+
     &.horizon {
         flex-direction: row;
         .info {
@@ -178,6 +188,10 @@ export default {
         .name {
             padding: 4px;
             font-size: 13px;
+
+            &:hover{
+                color: rgba(0, 0, 0, 0.95) !important;
+            }
         }
     }
 }

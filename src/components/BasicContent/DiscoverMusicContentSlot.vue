@@ -4,7 +4,6 @@
         <a-tabs
             v-model:activeKey="activeKey"
             :tabBarGutter="0"
-            :animated="true"
             @tabClick="tabClick"
         >
             <a-tab-pane
@@ -18,11 +17,11 @@
             </a-tab-pane>
         </a-tabs>
 
-        <section class="wy-wrapper">
-            <router-view>
-                <slot></slot>
-            </router-view>
-        </section>
+            <!--
+                <section class="wy-wrapper">
+                    <slot></slot>
+                </section>
+            -->
         <slot name="footer"></slot>
     </section>
 </template>

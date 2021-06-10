@@ -12,7 +12,7 @@
         <template v-slot:footer>
             <footer class="wy-footer">
                 <p>现在可以根据个人喜好,自由调整首页栏目顺序啦~</p>
-                <a-button type="danger" ghost @click="visible = true">调整栏目顺序</a-button>
+                <a-button type="danger" ghost >调整栏目顺序</a-button>
             </footer>
         </template>
 
@@ -31,9 +31,11 @@ export default {
     components: {DiscoverMusicContentSlot},
     setup(){
         const isRenderFinish = ref(false)
+        const visible = ref(true)
 
         return {
             isRenderFinish,
+            visible,
         }
     }
 }

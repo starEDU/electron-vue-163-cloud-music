@@ -1,23 +1,80 @@
 <template>
-    <Banner
-        ref="slider"
-        :autoPlay="false"
-        :data-w="width"
-        :height="width * 0.7 * 0.372"
-        :list="banners"
-        @sliderClick="onSliderClick"
-    />
-    <br>
+
+    <Suspense>
+        <template #default>
+            <Banner
+                ref="slider"
+                :autoPlay="false"
+                :data-w="width"
+                :height="width * 0.7 * 0.372"
+                :list="banners"
+                @sliderClick="onSliderClick"
+            />
+        </template>
+
+        <template #fallback>
+            <Loading />
+        </template>
+    </Suspense>
+
+    <Suspense>
+        <template #default>
+            <a-card title="推荐MV" >
+                <template #extra><a href="#">更多 <ArrowRightOutlined /></a></template>
+                <MV/>
+            </a-card>
+        </template>
+
+        <template #fallback>
+            <Loading />
+        </template>
+    </Suspense>
+
+    <Suspense>
+        <template #default>
+            <a-card title="推荐歌单" >
+                <template #extra><a href="#">更多 <ArrowRightOutlined /></a></template>
+                <SongSheet />
+            </a-card>
+        </template>
+
+        <template #fallback>
+            <Loading />
+        </template>
+    </Suspense>
+
+    <Suspense>
+        <template #default>
+            <a-card title="主播电台" >
+                <template #extra><a href="#">更多 <ArrowRightOutlined /></a></template>
+                <Dj />
+            </a-card>
+        </template>
+
+        <template #fallback>
+            <Loading />
+        </template>
+    </Suspense>
+
+
 </template>
 
 <script>
-import {ref,reactive,onMounted,} from "vue"
+import {ref,reactive,onMounted,defineAsyncComponent,} from "vue"
 
 import {shell} from "@electron/remote"
+
+const Loading = defineAsyncComponent(()=>import('@/components/Global/Loading'))
+
+const Banner = defineAsyncComponent(()=>import('@/components/Global/Banner'))
+const MV = defineAsyncComponent(()=>import('@/components/BasicContent/Personalized/MV'))
+const Dj = defineAsyncComponent(()=>import('@/components/BasicContent/Personalized/Dj'))
+const SongSheet =defineAsyncComponent(()=>import('@/components/BasicContent/Personalized/SongSheet'))
 
 
 export default {
     name: "PersonalizedRecommendation",
+    components: {Dj, SongSheet, Loading, Banner, MV},
     setup(){
         const slider = ref(null)
         const width = ref(1000)
@@ -314,6 +371,20 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
+/deep/ .ant-card-head{
+    min-height: 24px !important;
+}
+/deep/ .ant-card-body{
+    padding: 0 20px !important;
+}
 
+/deep/ .ant-card-extra a{
+    color: rgba(0, 0, 0, 0.85) !important;
+
+    &:hover{
+        color: rgba(0, 0, 0, 0.95) !important;
+
+    }
+}
 </style>

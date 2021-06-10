@@ -20,7 +20,7 @@ async function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
     width: 1200,
-    height: 900,
+    height: 680,
     minWidth: 900,
     title: process.platform === 'win32' ? '网易云音乐' : '',
     icon: path.resolve('public','images','tray.ico'),

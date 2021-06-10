@@ -1,5 +1,6 @@
 <template>
     <div class="mv">
+
         <ul class="list">
             <ListItem
                 item-type="mv"
@@ -9,11 +10,12 @@
                 :item="item"
                 :key="item.id"
             >
-                <div
-                    slot="copywriter"
-                    class="copywriter"
-                    v-if="item.copywriter"
-                >{{ item.copywriter }}</div>
+                <template v-slot:copywriter>
+                    <div
+                        class="copywriter"
+                        v-if="item.copywriter"
+                    >{{ item.copywriter }}</div>
+                </template>
             </ListItem>
         </ul>
     </div>
@@ -21,7 +23,7 @@
 
 <script>
 
-import {reactive,} from "vue"
+import {reactive,onMounted,} from "vue"
 
 
 import ListItem from "@/components/BasicContent/Personalized/ListItem"
@@ -31,9 +33,24 @@ export default {
     components: {ListItem},
     setup(){
         const list = reactive([])
+        const obj = reactive({})
+
+
+        onMounted(async ()=>{
+            const res = await $axios.get('/api/personalized/mv')
+            // 数据 push的方式 触发页面更新
+            list.push(...res.data.result)
+
+            // 不能这么写，这样重新赋值后会，obj会变成普通对象,失去响应式的效果;
+            // obj = {a:1,b:2}
+
+            // Object.assign(obj,{a:123,b:456})
+        })
+
 
         return {
             list,
+            obj,
         }
     }
 }
@@ -41,12 +58,19 @@ export default {
 
 <style lang="less" scoped>
 @gutter: 1%;
+
+.mv{
+    width: 100%;
+    height: 240px;
+}
+
 .list {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     margin: 0 -@gutter;
     .list-item {
+        cursor: pointer;
         width: 23%;
         margin-left: @gutter;
         margin-right: @gutter;

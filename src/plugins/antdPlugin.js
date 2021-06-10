@@ -13,6 +13,7 @@ import {
     Modal,
     Tabs,
     Tag,
+    Card,
 } from "ant-design-vue"
 
 import {
@@ -49,6 +50,7 @@ import {
     PlayCircleOutlined,
     LeftCircleOutlined,
     RightCircleOutlined,
+    ArrowRightOutlined,
 }  from "@ant-design/icons-vue"
 
 import MenuIcon from "../components/MenuIcon/MenuIcon"
@@ -90,6 +92,7 @@ export default {
         App.component('MenuIcon',MenuIcon)
         App.component('LeftCircleOutlined',LeftCircleOutlined)
         App.component('RightCircleOutlined',RightCircleOutlined)
+        App.component('ArrowRightOutlined',ArrowRightOutlined)
 
 
         App
@@ -104,6 +107,7 @@ export default {
             .use(Col)
             .use(Tabs)
             .use(Tag)
+            .use(Card)
 
         App.config.globalProperties.$info = Modal.info
         App.config.globalProperties.$success = Modal.success
