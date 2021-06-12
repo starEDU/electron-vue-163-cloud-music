@@ -14,6 +14,7 @@ import {
     Tabs,
     Tag,
     Card,
+    Pagination,
 } from "ant-design-vue"
 
 import {
@@ -108,6 +109,7 @@ export default {
             .use(Tabs)
             .use(Tag)
             .use(Card)
+            .use(Pagination)
 
         App.config.globalProperties.$info = Modal.info
         App.config.globalProperties.$success = Modal.success

@@ -1,6 +1,8 @@
 <template>
 <div class="page-playlist">
 
+    <Tags :tags="{'热门标签':tags}" @change="onTagChange"/>
+
     <ul class="playlists" >
         <router-link
             tag="li"
@@ -21,35 +23,70 @@
             :key="item.id"
         />
     </ul>
+    <div class="page">
+        <a-pagination
+            :total="playlists['total']"
+            @change="onPaginationChange"
+            show-quick-jumper
+        />
+    </div>
 </div>
 </template>
 
 <script>
-import {reactive,onMounted,ref,} from "vue"
+import {reactive,ref,watchEffect,} from "vue"
 import ListItem from "@/components/BasicContent/Personalized/ListItem"
+import Tags from "@/components/BasicContent/SongSheet/Tags"
 
 export default {
     name: "SongSheetPage",
-    components: {ListItem},
+    components: {Tags, ListItem},
     setup(){
         const playlists = reactive({})
-        const cat = ref('')
+        const cat = ref('华语')
         const pagination =  reactive({
-            limit: 29,
+            limit: 50,
             offset: 0,
             order: 'hot',
         })
+        const tags = reactive([])
 
-        onMounted(async ()=>{
-            const res = await $axios.get(`/api/top/playlist?cat=${'华语'}`)
+        const onTagChange = (tag)=>{
+            cat.value = tag.name
+        }
 
-            //const r = Object.assign(playlists,...res.data)
-            Object.assign(playlists,res.data)
-            console.log(res)
+        async function getSongSheetList(){
+            const res1 = await $axios.get(
+                `/api/top/playlist?cat=${cat.value}&limit=50&offset=${pagination.offset}`
+            )
+            console.log(res1.data)
+            Object.assign(playlists,res1.data)
+        }
+
+        async function getSongSheetHot(){
+            const res2 = await $axios.get(`/api/playlist/hot`)
+            tags.push(...res2.data.tags)
+        }
+
+        watchEffect( ()=>{
+            getSongSheetHot()
         })
+
+        watchEffect(()=>{
+            getSongSheetList(cat.value)
+        })
+
+        const onPaginationChange = (page,pageSize)=>{
+            // console.log(page,pageSize)
+            pagination.offset = page
+        }
 
         return {
             playlists,
+            onTagChange,
+            pagination,
+            tags,
+            onPaginationChange,
         }
     }
 }
@@ -57,13 +94,18 @@ export default {
 
 <style lang="less" scoped>
 .grid-layout(@gridGap:20px,@min:220px,@max:1fr) {
+    // 网格布局文档 http://www.ruanyifeng.com/blog/2019/03/grid-layout-tutorial.html
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(@min, @max));
     grid-gap: @gridGap;
 }
 
+.ant-tag-checkable-checked{
+    background: #c62f2f;
+}
+
 .page-playlist {
-    padding: 15px 0;
+    padding: 15px 20px;
     .playlists {
         .grid-layout(20px, 160px);
 
