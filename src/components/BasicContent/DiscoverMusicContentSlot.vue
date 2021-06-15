@@ -9,7 +9,7 @@
             <a-tab-pane
                 v-for="(item,index) in topMenus"
                 :key="index"
-                :tab="item.title"
+                :tab="item['title']"
             >
                 <keep-alive>
                     <component :is="componentList[index]"/>
@@ -17,11 +17,11 @@
             </a-tab-pane>
         </a-tabs>
 
-            <!--
-                <section class="wy-wrapper">
-                    <slot></slot>
-                </section>
-            -->
+        <!--
+            <section class="wy-wrapper">
+                <slot></slot>
+            </section>
+        -->
         <slot name="footer"></slot>
     </section>
 </template>
@@ -50,6 +50,7 @@ export default {
                         title: "歌单",
                         href: "/song_sheet",
                     },
+                    // 没时间写了
                     {
                         title: "主播电台",
                         href: "/anchor_station",

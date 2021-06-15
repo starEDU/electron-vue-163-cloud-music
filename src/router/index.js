@@ -13,6 +13,7 @@ import {rankList} from "@/router/modules/rankList"
 import {singer} from "@/router/modules/singer"
 import {latestMusic} from "@/router/modules/latestMusic"
 import {personalizedRecommendation} from "@/router/modules/personalizedRecommendation"
+import SongListPage from "@/views/LayoutContent/SongListPage"
 
 
 const routes = [
@@ -39,11 +40,16 @@ const routes = [
         ...singer,
         // 最新音乐
         ...latestMusic,
-      {
-        path: '/setting',
-        name: 'Setting',
-        component: Setting
-      },
+        {
+            path: '/setting',
+            name: 'Setting',
+            component: Setting
+        },
+        {
+            path: '/song_list_page',
+            name: 'SongListPage',
+            component: SongListPage
+        }
     ]
   },
 

@@ -258,7 +258,7 @@ export default {
             //border: 1ox fuchsia solid;
 
             .cate{
-                margin: 5px 0 0;
+                //margin: 5px 0 0;
                 padding-top: 16px;
                 border-top: 1px solid #d3d3d3;
 

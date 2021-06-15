@@ -54,6 +54,7 @@ import {
     LeftCircleOutlined,
     RightCircleOutlined,
     ArrowRightOutlined,
+    PlusOutlined,
 }  from "@ant-design/icons-vue"
 
 import MenuIcon from "../components/MenuIcon/MenuIcon"
@@ -96,6 +97,7 @@ export default {
         App.component('LeftCircleOutlined',LeftCircleOutlined)
         App.component('RightCircleOutlined',RightCircleOutlined)
         App.component('ArrowRightOutlined',ArrowRightOutlined)
+        App.component('PlusOutlined',PlusOutlined)
 
 
         App

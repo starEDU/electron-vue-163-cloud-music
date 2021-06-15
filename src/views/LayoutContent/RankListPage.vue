@@ -100,7 +100,11 @@
                         bordered
                         :loading="loading"
                         rowKey="id"
-                        :rowSelection="{type: 'radio',}"
+                        :rowSelection="{
+                            type: 'radio',
+                            selectedRowKeys: selectedRowKeys,
+                            onChange: onSelectChange
+                        }"
                         :customRow="customRow"
                     >
 <!--                        <template #name="{ text }">-->
@@ -111,49 +115,6 @@
 <!--                        </template>-->
 
                     </a-table>
-                <!--
-                    <el-table
-                        :data="songList"
-                        stripe
-                        style="width: 100%"
-                        highlight-current-row
-                        :lazy="true"
-                        @row-dblclick="rowDblclick"
-                    >
-                        <el-table-column
-                            type="index"
-                            :index="indexMethod"
-                            label="序号"
-                            width="80"
-                        ></el-table-column>
-                        <el-table-column
-                            prop="name"
-                            label="标题"
-                            width="325"
-                        >
-                            <template slot-scope="scope">
-                                <a href="javascript:;">{{scope.row.name }} </a>
-                            </template>
-                        </el-table-column>
-                        <el-table-column
-                            prop="dt"
-                            label="时长"
-                            width="90"
-                        >
-                            <template slot-scope="scope">
-                                <a href="javascript:;">{{scope.row.dt / 1000 | secondFormat}}</a>
-                            </template>
-                        </el-table-column>
-                        <el-table-column
-                            label="歌手"
-                            width="170"
-                        >
-                            <template slot-scope="scope">
-                                <a href="javascript:;">{{scope.row.ar | getSinger}}</a>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                -->
                 </div>
             </div>
         </div>
@@ -218,6 +179,7 @@ export default {
                     }
                 },
             ],
+            selectedRowKeys: []
         }
     },
     filters:{},
@@ -230,10 +192,17 @@ export default {
 
 
     methods: {
+        // 单选 选中
+        onSelectChange(selectedRowKeys){
+            console.log('selectedRowKeys changed: ', selectedRowKeys);
+            this.selectedRowKeys = selectedRowKeys;
+        },
+        // 双击
         customRow(record, index){
             return {
                 onDblclick: (event) => {
                     console.log(record, index)
+                    this.selectedRowKeys = [record.id]
                 },
             }
         },

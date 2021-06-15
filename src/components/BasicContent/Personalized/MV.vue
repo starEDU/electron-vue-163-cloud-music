@@ -18,6 +18,8 @@
                 </template>
             </ListItem>
         </ul>
+
+        <a-divider></a-divider>
     </div>
 </template>
 
@@ -61,7 +63,7 @@ export default {
 
 .mv{
     width: 100%;
-    height: 240px;
+    //height: 240px;
 }
 
 .list {
