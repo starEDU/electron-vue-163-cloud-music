@@ -169,7 +169,6 @@ export default {
         }
 
         return {
-            songList,
             columns,
             loading,
             songType,

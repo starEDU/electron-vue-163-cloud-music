@@ -17,6 +17,9 @@ import {
     Pagination,
     Table,
     Divider,
+    List,
+    Breadcrumb,
+
 } from "ant-design-vue"
 
 import {
@@ -55,6 +58,9 @@ import {
     RightCircleOutlined,
     ArrowRightOutlined,
     PlusOutlined,
+    DownloadOutlined,
+    ShareAltOutlined,
+    FolderAddOutlined,
 }  from "@ant-design/icons-vue"
 
 import MenuIcon from "../components/MenuIcon/MenuIcon"
@@ -98,6 +104,9 @@ export default {
         App.component('RightCircleOutlined',RightCircleOutlined)
         App.component('ArrowRightOutlined',ArrowRightOutlined)
         App.component('PlusOutlined',PlusOutlined)
+        App.component('DownloadOutlined',DownloadOutlined)
+        App.component('ShareAltOutlined',ShareAltOutlined)
+        App.component('FolderAddOutlined',FolderAddOutlined)
 
 
         App
@@ -116,6 +125,8 @@ export default {
             .use(Pagination)
             .use(Table)
             .use(Divider)
+            .use(List)
+            .use(Breadcrumb)
 
         App.config.globalProperties.$info = Modal.info
         App.config.globalProperties.$success = Modal.success

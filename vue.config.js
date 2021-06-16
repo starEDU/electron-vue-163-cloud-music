@@ -17,7 +17,6 @@ module.exports = {
             nodeIntegration: true,
             contextIsolation: false,
             enableRemoteModule: true,
-
         }
     },
     css: {
