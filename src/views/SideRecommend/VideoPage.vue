@@ -1,5 +1,5 @@
 <template>
-    <div class="page-video">
+    <div ref="videoList" class="page-video">
         <a-popover
             trigger="click"
             placement="bottomLeft"
@@ -26,41 +26,140 @@
             </template>
 
             <a-button size="small" style="font-size: 12px; margin: 12px 0">
-                {{ 'currentCateName' }}
+                {{ currentCateName }}
                 <DownOutlined />
             </a-button>
         </a-popover>
+
+        <a-divider />
+
+        <div  class="videos" >
+            <VideoItem
+                v-for="(video, index) in videos"
+                :video="video.data"
+                :key="`${video.id}_${index}`"
+                :showCreator="false"
+            />
+        </div>
+
+        <a-button type="primary" :loading="loading" @click="loadingGetVideo"> 加载更多</a-button>
+
     </div>
 </template>
 
 <script>
-import {ref,reactive,toRefs,computed,watchEffect} from "vue"
+import {ref,reactive,toRefs,onMounted,onUnmounted,watch,watchEffect} from "vue"
+
+import { useLoadMore } from 'vue-request'
+
+import VideoItem from "@/components/BasicSider/VideoItem"
 
 export default {
     name: "VideoPage",
+    components:{VideoItem,},
     setup(){
         const videoData = reactive({
             videoCate:[],
             groupId: 5100,
-            cates: []
-        })
+            currentCateName: '音乐',
+            videos: [],
 
+            hasmore: false,
+            loading: false
+        })
+        const videoList = ref(null)
+
+        // 视频分类
         const getVideoCate = async ()=>{
             const res = await $axios.get('/api/video/group/list')
-
-            videoData.videoCate = res.data.data
+            if ( res.data.data.length ){
+                videoData.videoCate = res.data.data
+                videoData.page ++
+            }
         }
         getVideoCate()
 
+        // 视频列表
+        const getVideo = async ()=>{
+            try {
+                const res = await $axios.get('/api/video/group?id='+videoData.groupId+'&_='+new Date().getTime())
+                const list = res.data.datas
 
+                if ( videoData.hasmore ){
+                    list.forEach((item)=>{
+                        videoData.videos.push(item)
+                    })
+                }else {
+                    videoData.videos = list
+                }
+
+            }catch (err){
+                console.log(err)
+            }
+        }
+        videoData.hasmore = true
+        getVideo()
+        // watchEffect(()=>{
+        //     // $axios.get('/api/login/cellphone?phone=15821356189&password=1q2w3e4r').then(res=>console.log(res))
+        //     // getVideo(videoData.groupId)
+        // })
+
+        watch(()=>videoData.groupId,()=>{
+            getVideo()
+        })
+
+        const handleScroll = (e) => {
+            if (e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight) {
+                //在此处放入你的加载更多方法
+                console.log(123)
+                videoData.hasmore = true
+                getVideo()
+            }
+        }
+
+        const loadingGetVideo = ()=>{
+            videoData.hasmore = true
+            getVideo()
+        }
+
+        onMounted(()=>{
+            getVideo()
+
+            window.addEventListener('scroll', handleScroll, true);
+            // 滚动的容器
+            /*
+            const el = videoList.value
+            const offsetHeight = el.offsetHeight
+            el.onscroll = () => {
+                const scrollTop = el.scrollTop
+                const scrollHeight = el.scrollHeight
+                if (offsetHeight + scrollTop - scrollHeight >= -1) {
+                    // 需要执行的代码
+                    console.log('已滚动到底部')
+                    videoData.hasmore = true
+                    // 调用list 原本的数据请求函数
+                    getVideo(videoData.groupId)
+                }
+            }
+            */
+        })
+
+        onUnmounted(()=>{
+            window.removeEventListener('scroll', handleScroll);
+        })
 
         // 选中 添加class
         const selectCate = (cate)=>{
             videoData.groupId = cate.id
+            videoData.currentCateName = cate.name
+            videoData.hasmore = false
         }
         return {
             ...toRefs(videoData),
             selectCate,
+            videoList,
+            getVideo,
+            loadingGetVideo,
         }
     }
 }
@@ -76,14 +175,18 @@ export default {
     grid-gap: @gridGap;
 }
 
+.page-video{
+    padding: 0 20px;
+    height: 100%;
+    overflow: auto;
+}
 
     .videos {
         .grid-layout(15px, 220px);
-        padding: 15px 0;
         .video {
             .media-wrap {
                 position: relative;
-                padding-top: 56%;
+
                 overflow: hidden;
                 .avatar {
                     position: absolute;

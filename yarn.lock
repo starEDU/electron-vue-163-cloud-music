@@ -5760,6 +5760,11 @@ js-message@1.0.7:
   resolved "https://registry.npm.taobao.org/js-message/download/js-message-1.0.7.tgz#fbddd053c7a47021871bb8b2c95397cc17c20e47"
   integrity sha1-+93QU8ekcCGHG7iyyVOXzBfCDkc=
 
+js-num-format@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.nlark.com/js-num-format/download/js-num-format-1.0.5.tgz#c16a9a3d8ec0210e51f2ff73017c56c4050632e0"
+  integrity sha1-wWqaPY7AIQ5R8v9zAXxWxAUGMuA=
+
 js-queue@2.0.2:
   version "2.0.2"
   resolved "https://registry.npm.taobao.org/js-queue/download/js-queue-2.0.2.tgz#0be590338f903b36c73d33c31883a821412cd482"

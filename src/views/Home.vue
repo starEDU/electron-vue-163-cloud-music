@@ -50,7 +50,7 @@ import BasicSiderIndex from "@/components/BasicSider/BasicSiderIndex"
 
 export default {
     name: 'Home',
-    components: {BasicSiderIndex, BasicHeaderIndex},
+    components: {BasicSiderIndex, BasicHeaderIndex,},
     setup(){
         const mouse = reactive({})
         const dragSideSize = ref(null)
@@ -138,7 +138,7 @@ export default {
         background: none;
         box-shadow: none;
         overflow-x: hidden;
-        overflow-y: hidden;
+        overflow-y: auto;
 
         .split-handle {
             position: absolute;

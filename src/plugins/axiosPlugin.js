@@ -74,6 +74,12 @@ _axios.interceptors.response.use(
             content: res.statusText + '，' + error.message
           })
           break;
+        case 405:
+          Modal.warn({
+            title: "不允许的方法",
+            content: res.statusText + '，' + error.message
+          })
+          break;
 
         case 500:
           Modal.warn({

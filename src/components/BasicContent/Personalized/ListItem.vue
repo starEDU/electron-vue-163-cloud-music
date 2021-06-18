@@ -60,10 +60,10 @@ export default {
             if (this.item.url) {
                 window.open(this.item.url);
             } else if (
-                this.itemType == "mv" && typeof this.item.id == "number"
+                this.itemType === "mv" && typeof this.item.id == "number"
             ) {
                 this.$router.push(`/mv/${this.item.id}`);
-            } else if (this.itemType == "video") {
+            } else if (this.itemType === "video") {
                 this.$router.push(`/video/${this.item.videoId}`);
             } else {
                 this.$router.push(`/playlist/${this.item.id}`);
@@ -73,7 +73,7 @@ export default {
     computed: {
 
         itemCls() {
-            return this.layout == "horizon" ? "item horizon" : "item";
+            return this.layout === "horizon" ? "item horizon" : "item";
         },
         styleObj() {
             let style = {};
@@ -85,9 +85,9 @@ export default {
                 return this.item.url;
             }
             let path;
-            if (this.itemType == "mv" && typeof this.item.id == "number") {
+            if (this.itemType === "mv" && typeof this.item.id == "number") {
                 path = `/mv/${this.item.id}`;
-            } else if (this.itemType == "video") {
+            } else if (this.itemType === "video") {
                 path = `/video/${this.item.videoId}`;
             } else {
                 path = `/playlist/${this.item.id}`;
