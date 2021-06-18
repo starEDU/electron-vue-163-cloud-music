@@ -61,8 +61,26 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  Modal.destroyAll();
-  next()
+    Modal.destroyAll();
+
+    if (to.meta && to.meta.auth){
+        const userId = 123
+        if ( userId ){
+            next()
+        }else {
+            console.log('redirect')
+        }
+    }else {
+        next()
+    }
+
+  // next()
+})
+
+router.afterEach((to,from)=>{
+    if ( to.meta && to.meta.title ){
+        
+    }
 })
 
 export default router

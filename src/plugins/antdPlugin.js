@@ -61,6 +61,7 @@ import {
     DownloadOutlined,
     ShareAltOutlined,
     FolderAddOutlined,
+    DownOutlined,
 }  from "@ant-design/icons-vue"
 
 import MenuIcon from "../components/MenuIcon/MenuIcon"
@@ -107,6 +108,7 @@ export default {
         App.component('DownloadOutlined',DownloadOutlined)
         App.component('ShareAltOutlined',ShareAltOutlined)
         App.component('FolderAddOutlined',FolderAddOutlined)
+        App.component('DownOutlined',DownOutlined)
 
 
         App
