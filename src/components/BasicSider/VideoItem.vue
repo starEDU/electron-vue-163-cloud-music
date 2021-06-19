@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import jsNumFormat from "@/mixins/jsNumFormat"
+import jsNumFormat from "@/mixins/formatMixin"
 
 export default {
     name: "VideoItem",

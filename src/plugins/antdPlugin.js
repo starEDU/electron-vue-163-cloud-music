@@ -19,7 +19,9 @@ import {
     Divider,
     List,
     Breadcrumb,
-
+    Progress,
+    slider,
+    tooltip,
 } from "ant-design-vue"
 
 import {
@@ -62,7 +64,15 @@ import {
     ShareAltOutlined,
     FolderAddOutlined,
     DownOutlined,
-
+    FolderOutlined,
+    StepBackwardOutlined,
+    StepForwardOutlined,
+    CaretRightOutlined,
+    PauseOutlined,
+    AudioMutedOutlined,
+    AudioOutlined,
+    HistoryOutlined,
+    OrderedListOutlined,
 }  from "@ant-design/icons-vue"
 
 import MenuIcon from "../components/MenuIcon/MenuIcon"
@@ -110,6 +120,15 @@ export default {
         App.component('ShareAltOutlined',ShareAltOutlined)
         App.component('FolderAddOutlined',FolderAddOutlined)
         App.component('DownOutlined',DownOutlined)
+        App.component('FolderOutlined',FolderOutlined)
+        App.component('StepBackwardOutlined',StepBackwardOutlined)
+        App.component('StepForwardOutlined',StepForwardOutlined)
+        App.component('CaretRightOutlined',CaretRightOutlined)
+        App.component('PauseOutlined',PauseOutlined)
+        App.component('AudioMutedOutlined',AudioMutedOutlined)
+        App.component('AudioOutlined',AudioOutlined)
+        App.component('HistoryOutlined',HistoryOutlined)
+        App.component('OrderedListOutlined',OrderedListOutlined)
 
 
         App
@@ -130,6 +149,9 @@ export default {
             .use(Divider)
             .use(List)
             .use(Breadcrumb)
+            .use(Progress)
+            .use(slider)
+            .use(tooltip)
 
         App.config.globalProperties.$info = Modal.info
         App.config.globalProperties.$success = Modal.success

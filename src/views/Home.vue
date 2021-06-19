@@ -27,8 +27,7 @@
             </a-layout-content>
         </a-layout>
         <a-layout-footer class="basic-layout-footer">
-        <!--  <play-bar />-->
-            <h3>播放控制条</h3>
+            <BottomPlayBar />
         </a-layout-footer>
 
         <!--
@@ -46,11 +45,12 @@ import throttle from "loadsh/throttle"
 
 import BasicHeaderIndex from "@/components/BasicHeader/BasicHeaderIndex"
 import BasicSiderIndex from "@/components/BasicSider/BasicSiderIndex"
+import BottomPlayBar from "@/components/Global/BottomBar/BottomPlayBar"
 
 
 export default {
     name: 'Home',
-    components: {BasicSiderIndex, BasicHeaderIndex,},
+    components: {BottomPlayBar, BasicSiderIndex, BasicHeaderIndex,},
     setup(){
         const mouse = reactive({})
         const dragSideSize = ref(null)
@@ -124,7 +124,8 @@ export default {
     }
 
     .basic-layout-footer {
-        border-top: 1px solid #ddd;
+        //border-top: 1px solid #ddd;
+        box-shadow: 0px -2px 15px #bbb;
     }
 
     .basic-layout-header {
