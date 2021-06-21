@@ -23,7 +23,7 @@ let myMusicRoutes = [
         name: "music_cloud",
         meta: {
             title: "我的音乐云盘",
-            icon: ()=><CloudUploadOutlined />,
+            icon: ()=><CloudOutlined />,
             auth: true,
         },
     },

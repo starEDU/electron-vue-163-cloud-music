@@ -47,17 +47,35 @@
                 <span>词</span>
             </a-tooltip>
 
-            <a-tooltip title="播放列表">
+            <a-tooltip title="播放列表" @click="showDrawer">
                 <OrderedListOutlined />
             </a-tooltip>
 
         </div>
+
+
+        <!-- 右侧抽屉-->
+        <a-drawer
+            :width="400"
+            title="Basic Drawer"
+            placement="right"
+            :closable="false"
+            v-model:visible="visible"
+            :after-visible-change="afterVisibleChange"
+        >
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+        </a-drawer>
+
+
 
     </div>
 </template>
 
 <script>
 import {ref,reactive,toRefs,} from "vue"
+
 
 import formatMixin from "@/mixins/formatMixin"
 
@@ -77,14 +95,30 @@ export default {
             return isSongReady.value ? "" : "disable";
         }
 
-        const changeMode = ()=>{
+        const changeMode = ()=>{}
 
+        const visible = ref(false);
+
+        const afterVisibleChange = bool => {
+            console.log('visible', bool)
         }
+
+        const showDrawer = () => {
+            visible.value = true
+        }
+
+
+
 
         return {
             disableCls,
             ...toRefs(songInfo),
             changeMode,
+
+
+            visible,
+            afterVisibleChange,
+            showDrawer,
         }
     }
 }
@@ -146,6 +180,7 @@ export default {
     height: 100%;
     display: flex;
     align-items: center;
+
     .resize {
         position: absolute;
         right: 2px;

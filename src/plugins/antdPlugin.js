@@ -22,6 +22,9 @@ import {
     Progress,
     slider,
     tooltip,
+    Descriptions,
+    Drawer,
+
 } from "ant-design-vue"
 
 import {
@@ -73,6 +76,15 @@ import {
     AudioOutlined,
     HistoryOutlined,
     OrderedListOutlined,
+    CloudOutlined,
+    FullscreenOutlined,
+    FullscreenExitOutlined,
+    PushpinOutlined,
+    DoubleLeftOutlined,
+    DoubleRightOutlined,
+    WomanOutlined,
+    ManOutlined,
+
 }  from "@ant-design/icons-vue"
 
 import MenuIcon from "../components/MenuIcon/MenuIcon"
@@ -129,6 +141,14 @@ export default {
         App.component('AudioOutlined',AudioOutlined)
         App.component('HistoryOutlined',HistoryOutlined)
         App.component('OrderedListOutlined',OrderedListOutlined)
+        App.component('CloudOutlined',CloudOutlined)
+        App.component('FullscreenOutlined',FullscreenOutlined)
+        App.component('FullscreenExitOutlined',FullscreenExitOutlined)
+        App.component('PushpinOutlined',PushpinOutlined)
+        App.component('DoubleRightOutlined',DoubleRightOutlined)
+        App.component('DoubleLeftOutlined',DoubleLeftOutlined)
+        App.component('ManOutlined',ManOutlined)
+        App.component('WomanOutlined',WomanOutlined)
 
 
         App
@@ -152,6 +172,8 @@ export default {
             .use(Progress)
             .use(slider)
             .use(tooltip)
+            .use(Descriptions)
+            .use(Drawer)
 
         App.config.globalProperties.$info = Modal.info
         App.config.globalProperties.$success = Modal.success

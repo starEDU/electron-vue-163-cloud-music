@@ -2,6 +2,8 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 
 import {Modal} from "ant-design-vue"
 
+import store from '../store'
+
 
 import Home from '../views/Home.vue'
 import Setting from "@/views/Setting"
@@ -64,11 +66,13 @@ router.beforeEach((to, from, next) => {
     Modal.destroyAll();
 
     if (to.meta && to.meta.auth){
-        const userId = 123
+        const userId = localStorage.getItem('userId')
         if ( userId ){
             next()
         }else {
             console.log('redirect')
+            // console.log(store.commit)
+            store.commit('setIsShowLoginWindow',true)
         }
     }else {
         next()
@@ -79,7 +83,7 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach((to,from)=>{
     if ( to.meta && to.meta.title ){
-        
+        document.title = to.meta.title
     }
 })
 

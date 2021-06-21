@@ -26,7 +26,8 @@
     "vue-request": "^1.2.0",
     "vue-router": "^4.0.0-0",
     "vue3-lazyload": "^0.2.2-beta",
-    "vuex": "^4.0.0-0"
+    "vuex": "^4.0.0-0",
+    "webapi-cookie": "^1.1.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

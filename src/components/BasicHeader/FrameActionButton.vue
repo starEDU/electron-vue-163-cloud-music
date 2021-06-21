@@ -1,5 +1,7 @@
 <template>
     <div class="frame-actions">
+        <PushpinOutlined class="item"/>
+
         <ShrinkOutlined class="item" @click="setFrame('mini')"/>
 
         <MinusOutlined class="item" @click="setFrame('min')" />

@@ -9578,6 +9578,11 @@ wcwidth@^1.0.1:
   dependencies:
     defaults "^1.0.3"
 
+webapi-cookie@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.nlark.com/webapi-cookie/download/webapi-cookie-1.1.2.tgz#bc6bfbb20cb6e92e051779a4466a2a82e4a1c987"
+  integrity sha1-vGv7sgy26S4FF3mkRmoqguShyYc=
+
 webpack-bundle-analyzer@^3.8.0:
   version "3.9.0"
   resolved "https://registry.nlark.com/webpack-bundle-analyzer/download/webpack-bundle-analyzer-3.9.0.tgz#f6f94db108fb574e415ad313de41a2707d33ef3c"

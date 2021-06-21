@@ -13,6 +13,8 @@
                 <BasicSiderIndex />
                 <!--<h2>侧边栏</h2>-->
 
+                <BottomSideFullScreen :sideWidth="sideWidth" @isFullScreen="isFullScreen"/>
+
             </a-layout-sider>
             <a-layout-content class="basic-layout-content">
                 <!--
@@ -26,19 +28,20 @@
                 <router-view></router-view>
             </a-layout-content>
         </a-layout>
-        <a-layout-footer class="basic-layout-footer">
+        <a-layout-footer class="basic-layout-footer bottom-play-bar">
             <BottomPlayBar />
         </a-layout-footer>
 
-        <!--
-            <login />
-            <player />
-        -->
+
+        <LoginWindow />
+
+        <Player :width="width" :height="height" @isFullScreen="isFullScreen"/>
+
     </a-layout>
 </template>
 
 <script>
-import {onMounted,reactive,ref,onUnmounted,} from "vue"
+import {onMounted, reactive, ref, onUnmounted, toRefs,} from "vue"
 
 import throttle from "loadsh/throttle"
 
@@ -46,14 +49,24 @@ import throttle from "loadsh/throttle"
 import BasicHeaderIndex from "@/components/BasicHeader/BasicHeaderIndex"
 import BasicSiderIndex from "@/components/BasicSider/BasicSiderIndex"
 import BottomPlayBar from "@/components/Global/BottomBar/BottomPlayBar"
+import BottomSideFullScreen from "@/components/BasicSider/BottomSideFullScreen"
+import Player from "@/components/Global/Play/Player"
+import LoginWindow from "@/components/Global/Login/LoginWindow"
 
 
 export default {
     name: 'Home',
-    components: {BottomPlayBar, BasicSiderIndex, BasicHeaderIndex,},
+    components: {LoginWindow, Player, BottomSideFullScreen, BottomPlayBar, BasicSiderIndex, BasicHeaderIndex,},
     setup(){
+
         const mouse = reactive({})
         const dragSideSize = ref(null)
+
+        const size = reactive({
+            width: '',
+            height: '',
+        })
+
         let appEle = null
 
         const sideDefaultWidth = 200
@@ -67,6 +80,7 @@ export default {
                 mouse.isDown = true
                 mouse.startX = e.pageX
             }
+            // 节流
             appEle.onmousemove = throttle(
                 (e) => {
                     if (!mouse.isDown) return
@@ -89,11 +103,19 @@ export default {
             appEle.onmousemove = appEle.onmouseup = null
         })
 
+        const isFullScreen = ({width,height})=>{
+            console.log(width,height)
+            size.width = width
+            size.height = height
+        }
+
         return {
             platform: process.platform,
             siderWidth: 200,
             dragSideSize,
             sideWidth,
+            ...toRefs(size),
+            isFullScreen,
         }
     }
 }
@@ -126,6 +148,10 @@ export default {
     .basic-layout-footer {
         //border-top: 1px solid #ddd;
         box-shadow: 0px -2px 15px #bbb;
+    }
+
+    .bottom-play-bar{
+        z-index: 9999;
     }
 
     .basic-layout-header {
