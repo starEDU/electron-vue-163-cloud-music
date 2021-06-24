@@ -1,19 +1,4 @@
-# project
+# 桌面端网易云音乐项目核心功能
++ 基于已有的`12-left-fullscreen-bottom-drawer-login-window`
 
-## Project setup
-```
-yarn install
-```
 
-### Compiles and hot-reloads for development
-```
-yarn electron:serve
-```
-
-### Compiles and minifies for production
-```
-yarn electron:build
-```
-
-### Description
-    + 开发中......

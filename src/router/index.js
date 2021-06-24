@@ -65,7 +65,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     Modal.destroyAll();
 
-    if (to.meta && to.meta.auth){
+    if (to.meta && to.meta["auth"]){
         const userId = localStorage.getItem('userId')
         if ( userId ){
             next()
@@ -73,6 +73,7 @@ router.beforeEach((to, from, next) => {
             console.log('redirect')
             // console.log(store.commit)
             store.commit('setIsShowLoginWindow',true)
+
         }
     }else {
         next()

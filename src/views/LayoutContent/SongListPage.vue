@@ -14,10 +14,10 @@
                             class="creator-avatar"
                             :src="`${playlist?.creator?.avatarUrl}?param=32y32`"
                         />
-                        <router-link
+                        <a
                             :to="`/user?id=${playlist.creator?.userId}`"
                             class="name"
-                        >{{ playlist.creator?.nickname }}</router-link>
+                        >{{ playlist.creator?.nickname }}</a>
                         <span class="time">{{ toDate(playlist.createTime) }}创建</span>
                     </div>
 
@@ -68,9 +68,9 @@
                                 v-for="(tag, tagIndex) in playlist.tags"
                                 :key="tagIndex"
                             >
-                                <router-link :to="`/playlist?cat=${tag}`">
+                                <a>
                                     {{tag}}
-                                </router-link>
+                                </a>
                             </a-breadcrumb-item>
                         </a-breadcrumb>
                         <span v-else>无</span>
@@ -168,7 +168,7 @@ export default {
         console.log(Route.query?.id)
         const getPlayListData = async ()=>{
             const res = await $axios.get('/api/playlist/detail?id='+6809333497)
-            console.log(res.data.playlist)
+            // console.log(res.data.playlist)
             playlist.playlist = res.data.playlist
         }
         getPlayListData()

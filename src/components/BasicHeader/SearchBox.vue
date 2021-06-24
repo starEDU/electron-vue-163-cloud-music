@@ -95,7 +95,8 @@ export default {
         top: 40px;
         left: 0;
         width: 300px;
-        height: 350px;
+        min-height: 350px;
+        background-color: #fff;
         box-shadow: 0 0 20px 0px rgba(0,0,0,0.2);
     }
 }

@@ -32,7 +32,7 @@
                     >
                         <SettingOutlined />
                     </div>
-                    <div class="item" @click="logout" v-if="userId">退出</div>
+                    <div class="item" @click="handleLogout" v-if="userId">退出</div>
                 </div>
                 <!-- 右上角功能按钮 -->
                 <FrameActionButton />
@@ -48,15 +48,37 @@ import SearchBox from "@/components/BasicHeader/SearchBox"
 import UserInfo from "@/components/BasicHeader/UserInfo"
 import ThemeSet from "@/components/BasicHeader/ThemeSet"
 import FrameActionButton from "@/components/BasicHeader/FrameActionButton"
+import webCookie from "webapi-cookie"
+
+
 export default {
     name: "BasicHeaderIndex",
     components: {FrameActionButton, ThemeSet, UserInfo, SearchBox, ActionButton},
     setup(){
 
-        const logout = ()=>{}
+        // 退出登录  注销
+        const handleLogout = async () => {
+            try {
+                const response = await $axios.get('/api/logout')
+                console.log(response)
+                const result = response.data
+                if (response.status === 200){
+                    if (result.code === 200){
+                        console.log('退出登录成功')
+                        webCookie.clear()
+                    }
+                }else {
+                    console.log('退出异常')
+                }
+
+            }catch (e){
+                console.log('服务器异常')
+            }
+        }
+
         return {
             userId: 1234,
-            logout,
+            handleLogout,
         }
     }
 }

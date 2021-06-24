@@ -57,7 +57,7 @@
         <!-- 右侧抽屉-->
         <a-drawer
             :width="400"
-            title="Basic Drawer"
+            title="播放列表自行构建吧"
             placement="right"
             :closable="false"
             v-model:visible="visible"

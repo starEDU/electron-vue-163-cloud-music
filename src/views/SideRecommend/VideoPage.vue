@@ -111,7 +111,7 @@ export default {
         const handleScroll = (e) => {
             if (e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight) {
                 //在此处放入你的加载更多方法
-                console.log(123)
+                // console.log(123)
                 videoData.hasmore = true
                 getVideo()
             }

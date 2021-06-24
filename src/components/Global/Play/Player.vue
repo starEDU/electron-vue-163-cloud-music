@@ -6,7 +6,7 @@
             title="退出全屏"
             @click="handleFullscreenExit"
         />
-
+        <h3>布局自行构建吧</h3>
     </div>
 </template>
 
@@ -96,7 +96,7 @@ export default {
     position: fixed;
     bottom: 0;
     left: 0;
-    z-index: 999;
+    z-index: 9999;
     -webkit-app-region: no-drag;
 
 

@@ -1,6 +1,6 @@
 <template>
     <!-- 未登录-->
-    <div v-if="!isLogin">
+    <div v-if="isLogin" @click="showLoginWindow">
         <a-avatar :size="30">
             <template #icon><UserOutlined /></template>
         </a-avatar>
@@ -19,10 +19,7 @@
                             align="middle"
                         >
                             <a-col>
-                                <router-link
-                                    :to="`/user?id=userInfo.profile.userId`"
-                                    class="username"
-                                >
+                                <a class="username">
                                     <img
                                         src="../../assets/images/coverall.png"
                                         v-lazy="`http://p1.music.126.net/T_0GRXDRqVIQlEnHi2ivew==/109951165695160138.jpg?param=30y30?param=50y50`"
@@ -40,7 +37,7 @@
                                         alt=""
                                     />
                                     <!--userInfo.profile.vipType-->
-                                </router-link>
+                                </a>
                             </a-col>
                             <a-col style="position: relative">
                                 <a-button
@@ -96,7 +93,7 @@
             </template>
 
 
-            <div @click="showUserInfo">
+            <div  @click="showUserInfo">
                 <a-avatar
                     :size="30"
                     shape="circle"
@@ -116,17 +113,24 @@ import {
     ref,
 } from "vue"
 
+import {useStore,} from "vuex"
+
+
 export default {
     name: "UserInfo",
     setup(){
+        const {commit} = useStore()
+
         const isLogin = ref(true)
         const loading = ref(false)
         const showPoint = ref(false)
 
-        const showUserInfo = ()=>{
-
-        }
+        const showUserInfo = ()=>{}
         const pcSign = ()=>{}
+
+        const showLoginWindow = ()=>{
+            commit('setIsShowLoginWindow',true)
+        }
 
         return {
             isLogin,
@@ -134,6 +138,8 @@ export default {
             loading,
             pcSign,
             showPoint,
+
+            showLoginWindow,
         }
     }
 }

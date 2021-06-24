@@ -2,7 +2,7 @@
     <div class="LoginWindow" v-if="isShowLoginWindow">
         <p class="hdbar">
             <span class="title">手机号登录</span>
-            <i class="close" @click="handleClose"></i>
+            <i class="close"></i>
         </p>
 
         <div class="userInputArea">
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import {mapState,mapMutations} from 'vuex'
+import {mapState,mapMutations,} from 'vuex'
 import webCookie from 'webapi-cookie'
 
 export default {
@@ -50,10 +50,10 @@ export default {
         // console.log(this.isShowLoginWindow )
         // this.handleLogout()
         // console.log(webCookie.getCookie('userInfo'))
-        if ( webCookie.getCookie('loginType') ){
-            // this.isShowLoginWindow = false
-            this['setIsShowLoginWindow'](false)
-        }
+        // if ( webCookie.getCookie('loginType') ){
+        //     // this.isShowLoginWindow = false
+        //     this['setIsShowLoginWindow'](false)
+        // }
     },
     computed: {
         ...mapState(['isShowLoginWindow'])
@@ -61,13 +61,14 @@ export default {
     methods: {
         ...mapMutations(['setIsShowLoginWindow']),
         handleClose(){
-            this['setIsShowLoginWindow'](false)
+            //this['setIsShowLoginWindow'](false)
+            // this.$router.back()
         },
         async handleLogin(){
             const {phone,password} = this
             try {
                 const response = await this.axios.get(`/api/login/cellphone?phone=${phone}&password=${password}`)
-                // console.log(response)
+                console.log(response)
                 const result = response.data
                 if (response.status === 200 && result.code === 200){
                     webCookie.setCookie('token',result.token, 7)
@@ -92,25 +93,7 @@ export default {
                 console.log(e)
             }
         },
-        // 退出登录  注销
-        async handleLogout(){
-            try {
-                const response = await this.axios.get('/api/logout')
-                // console.log(response)
-                const result = response.data
-                if (response.status === 200){
-                    if (result.code === 200){
-                        console.log('退出登录成功')
-                        webCookie.clear()
-                    }
-                }else {
-                    console.log('退出异常')
-                }
 
-            }catch (e){
-                console.log('服务器异常')
-            }
-        },
         listenLoginWindow(){
             if (this.isShowLoginWindow){
 
@@ -127,13 +110,12 @@ export default {
                         // This.isShowLoginWindow = true
                         This['setIsShowLoginWindow'](true)
 
-
                         autoCenter();
                     })
                 if (oClose)
                     oClose.addEventListener('click',()=>{
                         // This.isShowLoginWindow = true
-                        This['setIsShowLoginWindow'](true)
+                        This['setIsShowLoginWindow'](false)
 
                         autoCenter();
                     })

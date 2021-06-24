@@ -1,5 +1,5 @@
 <template>
-    <router-link tag="li" :to="`/dj/${dj.id}`" :class="itemCls">
+    <a tag="li" :to="`/dj/${dj.id}`" :class="itemCls">
         <figure class="info">
             <img class="avatar" v-lazy="dj.picUrl" />
             <div class="top">
@@ -14,7 +14,7 @@
             <div class="desc" v-if="dj.description">{{ dj.description }}</div>
             <slot name="price"></slot>
         </div>
-    </router-link>
+    </a>
 </template>
 
 <script>

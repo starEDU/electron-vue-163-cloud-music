@@ -28,10 +28,12 @@
 <script>
 import {ref,onMounted,} from "vue"
 
+
 export default {
     name: "BottomSideFullScreen",
     props: ['sideWidth'],
     setup(props,context){
+        // console.log(context)
         const {emit} = context
         const audioAvatar = ref(null)
         const isShowFullScreenIcon = ref(false)
@@ -63,6 +65,7 @@ export default {
     position: fixed;
     left: 0;
     bottom: 50px;
+    z-index: 1000;
     overflow: hidden;
     width: 100%;
     height: 50px;

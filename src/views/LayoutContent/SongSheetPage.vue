@@ -4,7 +4,7 @@
     <Tags :tags="{'热门标签':tags}" @change="onTagChange"/>
 
     <ul class="playlists" >
-        <router-link
+        <a
             tag="li"
             to="/playlist-highquality"
             class="list-item"
@@ -15,7 +15,7 @@
                 alt=""
              />
             <div>精品歌单精心推荐,给最懂音乐的你</div>
-        </router-link>
+        </a>
         <ListItem
             class="list-item"
             v-for="item in playlists.playlists"
@@ -59,7 +59,7 @@ export default {
             const res1 = await $axios.get(
                 `/api/top/playlist?cat=${cat.value}&limit=50&offset=${pagination.offset}`
             )
-            console.log(res1.data)
+            // console.log(res1.data)
             Object.assign(playlists,res1.data)
         }
 
