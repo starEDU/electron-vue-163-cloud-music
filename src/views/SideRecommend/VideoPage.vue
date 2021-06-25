@@ -50,7 +50,6 @@
 <script>
 import {ref,reactive,toRefs,onMounted,onUnmounted,watch,watchEffect} from "vue"
 
-import { useLoadMore } from 'vue-request'
 
 import VideoItem from "@/components/BasicSider/VideoItem"
 

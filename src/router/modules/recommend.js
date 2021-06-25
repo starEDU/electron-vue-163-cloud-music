@@ -25,6 +25,7 @@ let recommendRoutes = [
         meta: {
             title: "视频",
             icon: ()=><VideoCameraAddOutlined />,
+            auth: true,
         },
     },
     {

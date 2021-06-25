@@ -3,6 +3,7 @@
         <a-layout-header
             class="basic-layout-header"
             :class="{ 'basic-layout-header-mac': platform === 'darwin' }"
+            :style="{backgroundColor: '#FA541C',}"
         >
             <BasicHeaderIndex />
         </a-layout-header>

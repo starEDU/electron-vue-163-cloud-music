@@ -37,6 +37,7 @@ export default {
 <style lang="less" scoped>
 .ant-btn {
     background: #c62f2f;
+    background: transparent;
     color: #fff;
     border: 1px solid rgba(0, 0, 0, 0.1);
 }

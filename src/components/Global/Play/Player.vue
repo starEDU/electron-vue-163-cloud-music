@@ -119,5 +119,12 @@ export default {
     );
     //background-image: linear-gradient(to top, #000, #ddd);
     //-webkit-mask-image: linear-gradient(to bottom, #fff 0, #fff 15%, #fff 25%, rgba(255, 255, 255, 0.25) 75%, rgba(255, 255, 255, 0.1) 90%, rgba(255, 255, 255, 0) 100%);
+
+
+    //background-image: url("/images/404.gif"); // public目录图片
+    //background-image: url("~@/assets/images/loginBg.jpg");  // src/assets目录下的图片
+    //background-repeat: no-repeat;
+    //background-position: center;
+
 }
 </style>

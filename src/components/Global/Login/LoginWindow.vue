@@ -36,6 +36,8 @@
 import {mapState,mapMutations,} from 'vuex'
 import webCookie from 'webapi-cookie'
 
+
+
 export default {
     name: "LoginWindow",
     alias: '登录窗口',
@@ -47,13 +49,7 @@ export default {
         }
     },
     created() {
-        // console.log(this.isShowLoginWindow )
-        // this.handleLogout()
-        // console.log(webCookie.getCookie('userInfo'))
-        // if ( webCookie.getCookie('loginType') ){
-        //     // this.isShowLoginWindow = false
-        //     this['setIsShowLoginWindow'](false)
-        // }
+
     },
     computed: {
         ...mapState(['isShowLoginWindow'])
