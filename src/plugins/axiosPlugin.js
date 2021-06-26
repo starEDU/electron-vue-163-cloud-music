@@ -87,6 +87,12 @@ _axios.interceptors.response.use(
             content: res.statusText + '，' + error.message
           })
           break;
+        case 501:
+          Modal.warn({
+            title: "帐号不存在",
+            content: res.statusText + '，' + error.message
+          })
+          break;
         case 504:
           Modal.warn({
             title: "网络请求失败",

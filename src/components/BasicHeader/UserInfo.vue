@@ -1,6 +1,6 @@
 <template>
     <!-- 未登录-->
-    <div v-if="isLogin" @click="showLoginWindow">
+    <div v-if="!isLogin" @click="showLoginWindow">
         <a-avatar :size="30">
             <template #icon><UserOutlined /></template>
         </a-avatar>
@@ -22,13 +22,13 @@
                                 <a class="username">
                                     <img
                                         src="../../assets/images/coverall.png"
-                                        v-lazy="`http://p1.music.126.net/T_0GRXDRqVIQlEnHi2ivew==/109951165695160138.jpg?param=30y30?param=50y50`"
+                                        v-lazy="`${userInfo.avatarUrl}?param=30y30?param=50y50`"
                                         class="user-avatar"
                                         alt=""
                                      />
                                     <span class="user-info-name">
                                         <!--userInfo.profile.nickname-->
-                                        追梦
+                                        {{ userInfo.nickname }}
                                     </span>
                                     <img
                                         src="./../../assets/images/vip.jpg"
@@ -68,22 +68,19 @@
                         >
                             <a-col :span="6">
                                 <strong>
-                                    520
-                                    <!--userInfo.profile.eventCount-->
+                                    {{userMsg.eventCount}}
                                 </strong>
                                 <div>动态</div>
                             </a-col>
                             <a-col :span="12">
                                 <strong>
-                                    <!-- userInfo.profile.follows-->
-                                    99
+                                    {{userMsg.newFollows}}
                                 </strong>
                                 <div>关注</div>
                             </a-col>
                             <a-col :span="6">
                                 <strong>
-                                    <!-- userInfo.profile.followeds-->
-                                    1314
+                                    {{userMsg.followeds}}
                                 </strong>
                                 <div>粉丝</div>
                             </a-col>
@@ -97,9 +94,9 @@
                 <a-avatar
                     :size="30"
                     shape="circle"
-                    src="http://p1.music.126.net/T_0GRXDRqVIQlEnHi2ivew==/109951165695160138.jpg?param=30y30"
+                    :src="`${userInfo.avatarUrl}?param=30y30`"
                 />
-                宁静视听
+                {{ userInfo.nickname }}
             </div>
         </a-popover>
     </div>
@@ -111,17 +108,28 @@
 <script>
 import {
     ref,
+    reactive,
+    toRefs,
+    watchEffect,
 } from "vue"
 
 import {useStore,} from "vuex"
+
+import webCookie from "js-cookie"
 
 
 export default {
     name: "UserInfo",
     setup(){
-        const {commit} = useStore()
+        const {commit,state} = useStore()
 
-        const isLogin = ref(true)
+
+        const userInfo = reactive({
+            userInfo: {},
+            userMsg: {}
+        })
+
+
         const loading = ref(false)
         const showPoint = ref(false)
 
@@ -132,14 +140,32 @@ export default {
             commit('setIsShowLoginWindow',true)
         }
 
+        watchEffect(()=>{
+            if ( state.isLogin ){
+                const userInfoRes = webCookie.getJSON('userInfo')
+                userInfo.userInfo = userInfoRes
+                const getUserDetail = async ()=>{
+                    const res = await $axios.get(`/api/user/detail?uid=${userInfoRes.userId}`)
+                    console.log(res)
+                    if (res.status === 200 && res.data.code === 200){
+                        const {level,profile:{eventCount,newFollows, followeds,privateCount}} = res.data
+                        userInfo.userMsg = {level,eventCount,newFollows, followeds,privateCount}
+                    }
+                }
+                getUserDetail()
+            }
+        })
+
+
         return {
-            isLogin,
+            ...toRefs(state),
             showUserInfo,
             loading,
             pcSign,
             showPoint,
 
             showLoginWindow,
+            ...toRefs(userInfo)
         }
     }
 }

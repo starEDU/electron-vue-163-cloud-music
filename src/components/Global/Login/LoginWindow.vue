@@ -34,8 +34,11 @@
 
 <script>
 import {mapState,mapMutations,} from 'vuex'
-import webCookie from 'webapi-cookie'
+import webCookie from 'js-cookie'
 
+import {
+    Modal,
+} from "ant-design-vue"
 
 
 export default {
@@ -55,37 +58,49 @@ export default {
         ...mapState(['isShowLoginWindow'])
     },
     methods: {
-        ...mapMutations(['setIsShowLoginWindow']),
+        ...mapMutations(['setIsShowLoginWindow','setUserId','setIsLogin']),
         handleClose(){
             //this['setIsShowLoginWindow'](false)
             // this.$router.back()
         },
         async handleLogin(){
             const {phone,password} = this
+
             try {
-                const response = await this.axios.get(`/api/login/cellphone?phone=${phone}&password=${password}`)
-                console.log(response)
+                const  response = await $axios.get(`/api/login/cellphone?phone=${phone}&password=${password}`)
                 const result = response.data
-                if (response.status === 200 && result.code === 200){
-                    webCookie.setCookie('token',result.token, 7)
-                    webCookie.setCookie('cookie',result.cookie, 7)
-                    webCookie.setCookie('userId',result.profile.userId, 7)
-                    webCookie.setCookie('loginType',result.loginType, 7)
-                    webCookie.setCookie('userInfo',JSON.stringify({
+
+                if ( response.status === 200 && result.code === 200 ){
+                    this['setUserId'](result.profile.userId)
+
+                    webCookie.set('token',result.token,{expires:7})
+                    webCookie.set('cookie',result.cookie,{expires:7})
+                    webCookie.set('userId',result.profile.userId,{expires:7})
+                    webCookie.set('loginType',result.loginType,{expires:7})
+                    webCookie.set('userInfo',{
                         nickname: result.profile.nickname,
                         avatarUrl: result.profile.avatarUrl,
                         backgroundUrl: result.profile.backgroundUrl,
-                        userId: result.profile.userId,
-                    }),7)
-                    // console.log( result )
-                    // this.isShowLoginWindow = false
-                    this['setIsShowLoginWindow'](false)
+                        userId: result.profile.userId
+                    },{expires:7})
 
-                    this.$router.go(0)
+                    this['setIsShowLoginWindow'](false)
+                    // 登录成功
+                    this['setIsLogin'](true)
+
+                    // 登录后清空
+                    this.phone = ''
+                    this.password = ''
                 }else {
-                    console.log('登录失败')
+                    console.log('')
+                    Modal.warn({
+                        title: "登录失败",
+                        content: '请重新登录'
+                    })
+
                 }
-            }catch (e){
+
+            }catch (e) {
                 console.log(e)
             }
         },

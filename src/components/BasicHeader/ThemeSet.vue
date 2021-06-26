@@ -27,17 +27,23 @@
 <script>
 import {reactive, ref} from "vue"
 
+import {useStore} from "vuex"
+
+
 import {colorList} from "@/common/colorList"
 
 export default {
     name: "ThemeSet",
     setup(){
+        const {commit,} = useStore()
+
         const colorLists = reactive(colorList)
         const primaryColor = ref('#c62f2f')
 
         const changeColor = (color)=>{
             console.log(color)
             primaryColor.value = color
+            commit('setThemeColor',color)
         }
 
         return {

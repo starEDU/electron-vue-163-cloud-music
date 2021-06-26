@@ -32,7 +32,7 @@
                     >
                         <SettingOutlined />
                     </div>
-                    <div class="item" @click="handleLogout" v-if="userId">退出</div>
+                    <div class="item" @click="handleLogout" v-if="isLogin">退出</div>
                 </div>
                 <!-- 右上角功能按钮 -->
                 <FrameActionButton />
@@ -43,41 +43,40 @@
 </template>
 
 <script>
+import {toRefs} from "vue"
+import {useStore,} from "vuex"
+import webCookie from "webapi-cookie"
+
 import ActionButton from "@/components/BasicHeader/HistoryActionButton"
 import SearchBox from "@/components/BasicHeader/SearchBox"
 import UserInfo from "@/components/BasicHeader/UserInfo"
 import ThemeSet from "@/components/BasicHeader/ThemeSet"
 import FrameActionButton from "@/components/BasicHeader/FrameActionButton"
-import webCookie from "webapi-cookie"
+
 
 
 export default {
     name: "BasicHeaderIndex",
     components: {FrameActionButton, ThemeSet, UserInfo, SearchBox, ActionButton},
     setup(){
+        const {commit,state,} = useStore()
 
         // 退出登录  注销
         const handleLogout = async () => {
             try {
-                const response = await $axios.get('/api/logout')
-                console.log(response)
-                const result = response.data
-                if (response.status === 200){
-                    if (result.code === 200){
-                        console.log('退出登录成功')
-                        webCookie.clear()
-                    }
-                }else {
-                    console.log('退出异常')
+                const res = await $axios.get('/api/logout')
+                if ( res.status === 200 ){
+                    webCookie.clear()
+                    commit('setIsLogin',false)
                 }
 
-            }catch (e){
+            }catch (e) {
                 console.log('服务器异常')
             }
         }
 
         return {
-            userId: 1234,
+            ...toRefs(state),
             handleLogout,
         }
     }

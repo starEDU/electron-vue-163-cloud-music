@@ -3,7 +3,7 @@
         <a-layout-header
             class="basic-layout-header"
             :class="{ 'basic-layout-header-mac': platform === 'darwin' }"
-            :style="{backgroundColor: '#FA541C',}"
+            :style="{backgroundColor: themeColor,}"
         >
             <BasicHeaderIndex />
         </a-layout-header>
@@ -44,6 +44,9 @@
 <script>
 import {onMounted, reactive, ref, onUnmounted, toRefs,} from "vue"
 
+import {useStore,} from "vuex"
+
+
 import throttle from "loadsh/throttle"
 
 
@@ -59,6 +62,7 @@ export default {
     name: 'Home',
     components: {LoginWindow, Player, BottomSideFullScreen, BottomPlayBar, BasicSiderIndex, BasicHeaderIndex,},
     setup(){
+        const {state} = useStore()
 
         const mouse = reactive({})
         const dragSideSize = ref(null)
@@ -117,6 +121,7 @@ export default {
             sideWidth,
             ...toRefs(size),
             isFullScreen,
+            ...toRefs(state),
         }
     }
 }
