@@ -11,23 +11,34 @@
         </div>
 
         <div class="bar2">
-            <time class="time">{{secondFormat(currentTime)}}</time>
+            <time class="time" v-if="audioInfo.currentTime">{{secondFormat(audioInfo.currentTime)}}</time>
+            <time class="time" v-else>00:00</time>
 
             <a-slider
-                v-model:value="audioSlider"
+
+                v-model:value="audioInfo.currentTime"
+                :min="0"
+                :step="0.1"
+                :max="audioInfo.duration"
+                @afterChange="onAfterChange"
                 class="audioSlider"
             />
 
-            <time class="time">{{secondFormat(duration)}}</time>
+            <time class="time" v-if="audioInfo.duration">{{secondFormat(audioInfo.duration)}}</time>
+            <time class="time" v-else>00:00</time>
         </div>
 
         <div class="bar3">
-            <AudioMutedOutlined />
-            <AudioOutlined />
+            <AudioOutlined v-if="audioInfo.volume"/>
+            <AudioMutedOutlined v-else/>
 
             <a-slider
-                v-model:value="volumeSlider"
+                v-model:value="audioInfo.volume"
+                :min="0"
+                :max="1"
+                :step="0.1"
                 class="audioSlider"
+                @afterChange="onAfterChangeVolume"
             />
         </div>
 
@@ -74,7 +85,9 @@
 </template>
 
 <script>
-import {ref,reactive,toRefs,} from "vue"
+import {ref,reactive,toRefs,computed,} from "vue"
+
+import {useStore,} from "vuex"
 
 
 import formatMixin from "@/mixins/formatMixin"
@@ -83,6 +96,9 @@ export default {
     name: "BottomPlayBar",
     mixins: [formatMixin],
     setup(){
+        const {state,commit} = useStore()
+
+
         const isSongReady = ref(false)
         const songInfo = reactive({
             currentTime: 0,
@@ -107,18 +123,27 @@ export default {
             visible.value = true
         }
 
+        const onAfterChange = (v)=>{
+            console.log(v)
+            state.audioEle.currentTime = v
+        }
 
-
+        const onAfterChangeVolume = (v)=>{
+            console.log(v)
+            commit('setVolume',v)
+        }
 
         return {
             disableCls,
             ...toRefs(songInfo),
             changeMode,
-
+            ...toRefs(state),
 
             visible,
             afterVisibleChange,
             showDrawer,
+            onAfterChange,
+            onAfterChangeVolume,
         }
     }
 }

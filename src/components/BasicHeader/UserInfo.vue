@@ -146,7 +146,7 @@ export default {
                 userInfo.userInfo = userInfoRes
                 const getUserDetail = async ()=>{
                     const res = await $axios.get(`/api/user/detail?uid=${userInfoRes.userId}`)
-                    console.log(res)
+                    // console.log(res)
                     if (res.status === 200 && res.data.code === 200){
                         const {level,profile:{eventCount,newFollows, followeds,privateCount}} = res.data
                         userInfo.userMsg = {level,eventCount,newFollows, followeds,privateCount}

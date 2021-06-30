@@ -127,7 +127,7 @@
                 :tab="tab.label"
             >
                 <!--<component :is=""/>-->
-                <SongListTable />
+                <SongListTable :id="id"/>
             </a-tab-pane>
         </a-tabs>
     </div>
@@ -149,6 +149,9 @@ export default {
         const isLiked = ref(false)
         const activeKey = ref(0)
 
+        const Route = useRoute()
+        const id = Route.params?.id
+
         const tabs = [
             {
                 name: "playlist-id-tracks",
@@ -164,10 +167,10 @@ export default {
             },
         ]
 
-        const Route = useRoute()
-        console.log(Route.query?.id)
+
+        console.log(id)
         const getPlayListData = async ()=>{
-            const res = await $axios.get('/api/playlist/detail?id='+6809333497)
+            const res = await $axios.get('/api/playlist/detail?id='+id)
             // console.log(res.data.playlist)
             playlist.playlist = res.data.playlist
         }
@@ -200,6 +203,7 @@ export default {
             share,
             tabs,
             activeKey,
+            id,
         };
     },
 }

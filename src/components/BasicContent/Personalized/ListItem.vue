@@ -43,8 +43,8 @@ export default {
         ratio: { type: Number, default: 1 }, // 图片高宽比
         item: { type: Object, default: null },
         itemType: {
-            // type: String,
-            // default: 'playlist',
+            type: String,
+            default: 'song_list_page',
             // validator (value) {
             //   return [ 'playlist', 'video', 'mv' ].includes(value)
             // }
@@ -66,7 +66,7 @@ export default {
             } else if (this.itemType === "video") {
                 this.$router.push(`/video/${this.item.videoId}`);
             } else {
-                this.$router.push(`/playlist/${this.item.id}`);
+                this.$router.push(`/song_list_page/${this.item.id}`);
             }
         },
     },

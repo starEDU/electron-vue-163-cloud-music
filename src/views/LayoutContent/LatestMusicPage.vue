@@ -1,6 +1,6 @@
 <template>
     <div class="newsong">
-        <router-link to="/song_list_page"> 歌单列表页面 </router-link>
+<!--        <router-link to="/song_list_page"> 歌单列表页面 </router-link>-->
         <div class="cates">
             <a
                 href="#"
@@ -39,21 +39,8 @@
             </div>
             <div class="tracks-body">
 <!--                <a-spin :spinning="loading" />-->
-                <a-table
-                    :columns="columns"
-                    :data-source="songList"
-                    bordered
-                    :loading="loading"
-                    rowKey="id"
-                    :rowSelection="{
-                        type: 'radio',
-                        selectedRowKeys: selectedRowKeys,
-                        onChange: onSelectChange
-                    }"
-                    :customRow="customRow"
-                    :pagination="false"
+                <SongListTable :type="songType"/>
 
-                ></a-table>
 
             </div>
         </div>
@@ -61,50 +48,19 @@
 </template>
 
 <script>
-import {ref,onMounted,reactive,watchEffect,toRefs,} from "vue"
-import secondFormat from "second-format"
+import {ref,reactive,toRefs,} from "vue"
+
+
+import SongListTable from "@/components/BasicContent/SongSheet/SongListTable"
 
 export default {
     name: "LatestMusicPage",
+    components: {SongListTable},
     setup(){
         const songList = reactive({
             songList: []
         })
 
-        const columns = [
-            {
-                title: "序号",
-                dataIndex: "id",
-                customRender: ({text, record, index}) =>{
-                    return index+1
-                }
-            },
-            {
-                title: "音乐标题",
-                dataIndex: "name",
-            },
-            {
-                title: "歌手",
-                dataIndex: "artists",
-                customRender: ({text, record, index}) =>{
-                    return getSinger(text)
-                }
-            },
-            {
-                title: "专辑",
-                dataIndex: "album",
-                customRender: ({text, record, index}) =>{
-                    return text.name
-                }
-            },
-            {
-                title: "时长",
-                dataIndex: "duration",
-                customRender: ({text, record, index}) =>{
-                    return secondFormat(text/1000)
-                }
-            },
-        ]
         const loading = ref(false)
         const songType = ref(0)
         const cateMap = {
@@ -115,70 +71,25 @@ export default {
             16: "韩国",
         }
 
-        // 处理歌手数组
-        const getSinger = (val) => {
-            const nameArr = val.map((item)=>{
-                return item.name
-            })
-            return nameArr.join(',')
-        }
-
-        const getData = async ()=>{
-            loading.value = true
-
-            console.log(songType.value)
-            try {
-                const res = await $axios.get('/api/top/song?type='+songType.value)
-                // console.log(res)
-                loading.value = false
-                songList.songList = res.data.data
-            }catch (e) {
-                console.log(e)
-            }
-
-        }
-        watchEffect(()=>{
-            getData()
-        })
-
         const changeType = (type)=>{
+
             songType.value = type
         }
 
-        //  双击选中
-        const customRow = (record, index) => {
-            return {
-                onDblclick: (event) => {
-                    console.log(record, index)
-                    state.selectedRowKeys = [record.id]
-                },
-            }
-        }
-
-        // 单选 选中
-        const state = reactive({
-            selectedRowKeys: [],
-        })
-        const onSelectChange = selectedRowKeys => {
-            console.log('selectedRowKeys changed: ', selectedRowKeys);
-            state.selectedRowKeys = selectedRowKeys;
-        }
 
         const playAll = ()=>{
             console.log('播放全部逻辑...')
         }
 
         return {
-            columns,
             loading,
             songType,
             cateMap,
             changeType,
-            customRow,
             ...toRefs(songList),
-            ...toRefs(state),
-            onSelectChange,
+
             playAll,
+
         }
     }
 }

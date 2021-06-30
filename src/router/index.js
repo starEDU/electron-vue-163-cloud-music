@@ -2,11 +2,15 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 
 import {Modal} from "ant-design-vue"
 
+import webCookie from "js-cookie"
+
 import store from '../store'
 
 
 import Home from '../views/Home.vue'
 import Setting from "@/views/Setting"
+
+
 import {recommendRoutes} from "@/router/modules/recommend"
 import {myMusicRoutes} from "@/router/modules/myMusic"
 import {songSheet} from "@/router/modules/songSheet"
@@ -48,7 +52,7 @@ const routes = [
             component: Setting
         },
         {
-            path: '/song_list_page',
+            path: '/song_list_page/:id',
             name: 'SongListPage',
             component: SongListPage
         }
@@ -66,7 +70,7 @@ router.beforeEach((to, from, next) => {
     Modal.destroyAll();
 
     if (to.meta && to.meta["auth"]){
-        const userId = localStorage.getItem('userId')
+        const userId = webCookie.get('userId')
         if ( userId ){
             next()
         }else {

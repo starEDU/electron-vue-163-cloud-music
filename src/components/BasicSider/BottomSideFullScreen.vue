@@ -1,5 +1,5 @@
 <template>
-    <div class="BottomSideFullScreen" :style="{width:sideWidth+'px',}">
+    <div v-if="audioInfo.pic" class="BottomSideFullScreen" :style="{width:sideWidth+'px',}">
         <div class="audioAvatar" ref="audioAvatar">
         <!--
             <a-avatar shape="square" :size="50">
@@ -11,7 +11,7 @@
             <a-avatar
                 shape="square"
                 :size="50"
-                src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                :src="audioInfo.pic"
             />
 
             <div class="full-screen" v-if="isShowFullScreenIcon" @click="handleFullscreen">
@@ -19,20 +19,24 @@
             </div>
         </div>
         <div class="audioInfo">
-            <span class="name">DownFails</span>
-            <span class="singer">Cally Rhodes</span>
+            <span class="name">{{audioInfo.name}}</span>
+            <span class="singer">{{ audioInfo.author }}</span>
         </div>
     </div>
 </template>
 
 <script>
-import {ref,onMounted,} from "vue"
+import {ref,onMounted,toRefs,} from "vue"
+
+import {useStore,} from "vuex"
 
 
 export default {
     name: "BottomSideFullScreen",
     props: ['sideWidth'],
     setup(props,context){
+        const {state,} = useStore()
+
         // console.log(context)
         const {emit} = context
         const audioAvatar = ref(null)
@@ -55,6 +59,7 @@ export default {
             audioAvatar,
             isShowFullScreenIcon,
             handleFullscreen,
+            ...toRefs(state),
         }
     }
 }

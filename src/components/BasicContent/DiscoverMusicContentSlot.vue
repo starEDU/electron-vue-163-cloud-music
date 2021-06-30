@@ -90,7 +90,7 @@ export default {
             LatestMusicPage,
         ]
         const tabClick = ()=>{
-            console.log(123)
+            // console.log(123)
         }
 
         return {
