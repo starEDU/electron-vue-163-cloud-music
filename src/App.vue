@@ -21,7 +21,7 @@ export default {
             timer = setTimeout(()=>{
                 clearTimeout(timer)
                 let duration = audioEle.value.duration
-                console.log(duration)
+                console.log(duration, 'isNaN'+isNaN(duration))
                 if ( isNaN(duration) ){
                     getDuration()
                 }else {

@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import {ref, reactive, toRefs,watchEffect,watch} from "vue"
+import {ref, reactive, toRefs,watchEffect,} from "vue"
 import {Modal} from "ant-design-vue"
 
 import secondFormat from "second-format"
@@ -39,7 +39,7 @@ export default {
             {
                 title: "序号",
                 dataIndex: "id",
-                customRender: ({text, record, index}) => {
+                customRender: ({index}) => {
                     return index + 1
                 }
             },
@@ -50,7 +50,7 @@ export default {
             {
                 title: "歌手",
                 dataIndex: "ar",
-                customRender: ({text, record, index}) => {
+                customRender: ({text, record,}) => {
 
                     return text ? getSinger(text) : getSinger(record['artists'])
                 }
@@ -58,14 +58,14 @@ export default {
             {
                 title: "专辑",
                 dataIndex: "al",
-                customRender: ({text, record, index}) => {
+                customRender: ({text, record, }) => {
                     return text ? text.name : record['album']
                 }
             },
             {
                 title: "时长",
                 dataIndex: "dt",
-                customRender: ({text, record, index}) => {
+                customRender: ({text, record, }) => {
                     return text ? secondFormat(text / 1000) : secondFormat(record.duration/1000)
                 }
             },
@@ -84,7 +84,7 @@ export default {
         //  双击选中
         const customRow = (record, index) => {
             return {
-                onDblclick: async (event) => {
+                onDblclick: async () => {
                     // console.log(record, index)
                     state.selectedRowKeys = [record.id]
 
@@ -133,7 +133,7 @@ export default {
                 if (props.id){
 
                     const res = await $axios.get('/api/playlist/detail?id=' + props.id)
-                    songList.songList = res.data.playlist.tracks
+                    songList.songList = res.data.playlist['tracks']
                 }
                 if(!isNaN(props.type)){
 

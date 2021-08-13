@@ -19,7 +19,8 @@ export default createStore({
       currentTime: 0,
       duration:0,
       volume: 0.2,
-    }
+    },
+    isPlayState: false,
   },
   mutations: {
     setIsShowLoginWindow(state,b){
@@ -60,7 +61,15 @@ export default createStore({
       state.audioEle.play()
 
     },
+    setIsPlayState(state){
+      state.isPlayState = !state.isPlayState
+      if ( state.isPlayState ){
+        state.audioEle.play()
+      }else {
+        state.audioEle.pause()
 
+      }
+    }
   },
   actions: {
     async getMusicUrl({commit,state},payload){

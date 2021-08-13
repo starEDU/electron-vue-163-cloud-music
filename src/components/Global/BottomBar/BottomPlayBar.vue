@@ -2,16 +2,18 @@
     <div class="player">
 
         <div class="bar1" :class="disableCls()">
-            <StepBackwardOutlined />
+            <StepBackwardOutlined @click="prevAndNext(-1)"/>
 
-            <CaretRightOutlined />
-            <!--<PauseOutlined />-->
+            <div class="playAndPause" @click="playAndPause">
+                <CaretRightOutlined v-show="!isPlayState"/>
+                <PauseOutlined v-show="isPlayState"/>
+            </div>
 
-            <StepForwardOutlined />
+            <StepForwardOutlined @click="prevAndNext(1)"/>
         </div>
 
         <div class="bar2">
-            <time class="time" v-if="audioInfo.currentTime">{{secondFormat(audioInfo.currentTime)}}</time>
+            <time class="time" v-if="audioInfo['currentTime']">{{secondFormat(audioInfo.currentTime)}}</time>
             <time class="time" v-else>00:00</time>
 
             <a-slider
@@ -85,18 +87,19 @@
 </template>
 
 <script>
-import {ref,reactive,toRefs,computed,} from "vue"
+import {ref,reactive,toRefs,} from "vue"
 
 import {useStore,} from "vuex"
 
 
 import formatMixin from "@/mixins/formatMixin"
+import {Modal} from "ant-design-vue"
 
 export default {
     name: "BottomPlayBar",
     mixins: [formatMixin],
     setup(){
-        const {state,commit} = useStore()
+        const {state,commit,dispatch} = useStore()
 
 
         const isSongReady = ref(false)
@@ -133,6 +136,49 @@ export default {
             commit('setVolume',v)
         }
 
+        const playAndPause = ()=>{
+            commit('setIsPlayState')
+        }
+
+        // 处理歌手数组
+        const getSinger = (val) => {
+            const nameArr = val.map((item) => {
+                return item.name
+            })
+            return nameArr.join(',')
+        }
+
+        const prevAndNext = async (i)=>{
+            const currentPlayIndex = state.currentPlayIndex
+            const playSongList = state.playSongList
+
+            const index = (currentPlayIndex + i) < 0 ? playSongList.length -1 : (currentPlayIndex + i) % playSongList.length
+
+            commit('setCurrentPlayIndex', index)
+
+            // 请求播放地址
+            const r =  await dispatch('getMusicUrl', {
+                id: playSongList[index].id,
+                name: playSongList[index].name,
+                author: playSongList[index].ar ? getSinger(playSongList[index].ar) : getSinger(playSongList[index]['artists']),
+                pic: playSongList[index].ar ? playSongList[index]['al']['picUrl'] : playSongList[index]['album']['picUrl'],
+            })
+            // console.log(r)
+            // 判断当前歌曲是否有版权
+            if ( !r ){
+                Modal.warning({
+                    title: record.name,
+                    content: '此歌曲版权，请播放下一首歌曲',
+                })
+                // 无版权 就不再往下执行
+                return false
+            }
+
+            // 播放音乐
+            commit('playMusic')
+
+        }
+
         return {
             disableCls,
             ...toRefs(songInfo),
@@ -144,6 +190,8 @@ export default {
             showDrawer,
             onAfterChange,
             onAfterChangeVolume,
+            playAndPause,
+            prevAndNext,
         }
     }
 }
@@ -258,6 +306,13 @@ export default {
             &:nth-child(even){
                 font-size: 24px;
             }
+
+        }
+        .playAndPause {
+            .anticon{
+                font-size: 24px;
+            }
+
         }
     }
     .bar2 {

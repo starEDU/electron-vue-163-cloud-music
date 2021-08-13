@@ -1,5 +1,5 @@
 <template>
-    <div v-if="audioInfo.pic" class="BottomSideFullScreen" :style="{width:sideWidth+'px',}">
+    <div v-show="audioInfo.pic" class="BottomSideFullScreen" :style="{width:sideWidth+'px',}">
         <div class="audioAvatar" ref="audioAvatar">
         <!--
             <a-avatar shape="square" :size="50">
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import {ref,onMounted,toRefs,} from "vue"
+import {ref, toRefs, nextTick,} from "vue"
 
 import {useStore,} from "vuex"
 
@@ -42,19 +42,24 @@ export default {
         const audioAvatar = ref(null)
         const isShowFullScreenIcon = ref(false)
 
-        onMounted(()=>{
-            audioAvatar.value.addEventListener('mouseover',()=>{
-                isShowFullScreenIcon.value = true
-            })
-            audioAvatar.value.addEventListener('mouseleave',()=>{
-                isShowFullScreenIcon.value = false
-            })
-        })
+
 
         const handleFullscreen = ()=>{
             emit('isFullScreen',{width: '100vw',height: '100vh'})
         }
 
+
+        nextTick(()=>{
+            if (audioAvatar.value){
+                audioAvatar.value.addEventListener('mouseover',()=>{
+                    isShowFullScreenIcon.value = true
+                })
+                audioAvatar.value.addEventListener('mouseleave',()=>{
+                    isShowFullScreenIcon.value = false
+                })
+            }
+
+        })
         return {
             audioAvatar,
             isShowFullScreenIcon,
