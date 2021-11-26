@@ -23,6 +23,7 @@
                 :step="0.1"
                 :max="audioInfo.duration"
                 @afterChange="onAfterChange"
+                @change="handleProgress"
                 class="audioSlider"
             />
 
@@ -45,9 +46,8 @@
         </div>
 
         <div class="bar4">
-            <a-tooltip title="动感光波">
+            <a-tooltip title="动感光波" @click="handleDanceLyric">
                 <RedditOutlined />
-
             </a-tooltip>
 
             <a-tooltip title="随机播放">
@@ -70,15 +70,15 @@
         <!-- 右侧抽屉-->
         <a-drawer
             :width="400"
-            title="播放列表自行构建吧"
+            title="当前播放"
             placement="right"
             :closable="false"
             v-model:visible="visible"
             :after-visible-change="afterVisibleChange"
         >
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
+            <template v-if="playSongList.length>0">
+                <TableDataComp :songList="playSongList"/>
+            </template>
         </a-drawer>
 
 
@@ -94,9 +94,11 @@ import {useStore,} from "vuex"
 
 import formatMixin from "@/mixins/formatMixin"
 import {Modal} from "ant-design-vue"
+import TableDataComp from "@/components/Global/TableDataComp"
 
 export default {
     name: "BottomPlayBar",
+    components: {TableDataComp},
     mixins: [formatMixin],
     setup(){
         const {state,commit,dispatch} = useStore()
@@ -127,6 +129,12 @@ export default {
         }
 
         const onAfterChange = (v)=>{
+            // console.log(v)
+            // state.audioEle.currentTime = v
+        }
+
+        const handleProgress = (v)=>{
+            // 	当 Slider 的值发生改变时,会触发 change 事件，并把改变后的值作为参数传入。
             console.log(v)
             state.audioEle.currentTime = v
         }
@@ -179,6 +187,10 @@ export default {
 
         }
 
+        const handleDanceLyric = ()=>{
+            commit('danceLyric')
+        }
+
         return {
             disableCls,
             ...toRefs(songInfo),
@@ -190,8 +202,10 @@ export default {
             showDrawer,
             onAfterChange,
             onAfterChangeVolume,
+            handleProgress,
             playAndPause,
             prevAndNext,
+            handleDanceLyric,
         }
     }
 }

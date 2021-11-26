@@ -1,6 +1,6 @@
 <template>
   <router-view/>
-    <audio ref="audioEle"></audio>
+  <audio ref="audioEle" crossOrigin="crossOrigin"></audio>
 </template>
 
 <script>
@@ -21,11 +21,11 @@ export default {
             timer = setTimeout(()=>{
                 clearTimeout(timer)
                 let duration = audioEle.value.duration
-                console.log(duration, 'isNaN'+isNaN(duration))
+                // console.log(duration, 'isNaN:'+isNaN(duration))
                 if ( isNaN(duration) ){
                     getDuration()
                 }else {
-
+                    // console.log(duration)
                     commit('setDuration',duration)
                     clearTimeout(timer)
                 }

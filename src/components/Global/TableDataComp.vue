@@ -22,6 +22,7 @@ import moment from "moment"
 
 export default {
     name: "TableDataComp",
+
     props: {
         songList: {
             type: Array,
@@ -48,14 +49,15 @@ export default {
                 title: "歌手",
                 dataIndex: "ar",
                 customRender: ({text, record, index}) =>{
-                    return getSinger(text)
+                    return text ? getSinger(text) : getSinger(record['artists'])
                 }
             },
             {
                 title: "专辑",
                 dataIndex: "al",
                 customRender: ({text, record, index}) =>{
-                    return text.name
+
+                    return text ? text.name : record['album']
                 }
             },
             {
@@ -104,10 +106,12 @@ export default {
 
         // 处理歌手数组
         const getSinger = (val) => {
+
             const nameArr = val.map((item)=>{
                 return item.name
             })
             return nameArr.join(',')
+
         }
         const loading = ref(false)
 

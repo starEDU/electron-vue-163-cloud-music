@@ -16,7 +16,6 @@
             <div class="top" v-if="item.playCount || item.playTime">
                 <CustomerServiceOutlined />
                 {{ toWan(item.playCount) }}
-<!--                 {{item.playCount | toWan || item.playTime | toWan}}-->
             </div>
             <div class="bottom" v-if="item.creator">
                 <UserOutlined />
@@ -49,7 +48,7 @@ export default {
             //   return [ 'playlist', 'video', 'mv' ].includes(value)
             // }
         },
-        imgParam: { type: String, default: "200y200" },
+        imgParam: { type: String, default: "300y300" },
     },
 
     methods: {

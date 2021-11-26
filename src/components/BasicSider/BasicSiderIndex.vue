@@ -96,6 +96,7 @@ export default {
         const theme = ref('light')
 
         const state = reactive({
+
             // 当前展开的 SubMenu 菜单项 key 数组
             openKeys: ['sub1','sub2',],
             // 当前选中的菜单项 key 数组

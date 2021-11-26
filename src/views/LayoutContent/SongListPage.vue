@@ -138,6 +138,7 @@ import {ref,reactive,onErrorCaptured,toRefs,} from "vue"
 import {useRoute,} from "vue-router"
 import moment from "moment"
 import SongListTable from "@/components/BasicContent/SongSheet/SongListTable"
+import {api} from "@/utils/baseProxy"
 
 
 export default {
@@ -170,7 +171,7 @@ export default {
 
         console.log(id)
         const getPlayListData = async ()=>{
-            const res = await $axios.get('/api/playlist/detail?id='+id)
+            const res = await $axios.get(api + '/playlist/detail?id='+id)
             // console.log(res.data.playlist)
             playlist.playlist = res.data.playlist
         }

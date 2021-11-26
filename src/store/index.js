@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import createPersistedState  from "vuex-persistedstate"
+import {api} from "@/utils/baseProxy"
 
 
 
@@ -17,10 +18,11 @@ export default createStore({
       author: '未知',
       pic: '',
       currentTime: 0,
-      duration:0,
-      volume: 0.2,
+      duration: 0,
+      volume: 1,
     },
     isPlayState: false,
+    danceLyric: false,
   },
   mutations: {
     setIsShowLoginWindow(state,b){
@@ -57,7 +59,7 @@ export default createStore({
     playMusic(state){
       // console.log(state.audioInfo.volume)
       state.audioEle.volume = state.audioInfo.volume
-
+      // state.audioEle.playbackRate = 3
       state.audioEle.play()
 
     },
@@ -69,7 +71,10 @@ export default createStore({
         state.audioEle.pause()
 
       }
-    }
+    },
+    danceLyric(state){
+      state.danceLyric = !state.danceLyric
+    },
   },
   actions: {
     async getMusicUrl({commit,state},payload){
@@ -80,7 +85,7 @@ export default createStore({
         pic
       } = payload
 
-      const res = await $axios.get('/api/song/url?id='+id)
+      const res = await $axios.get(api + '/song/url?id='+id)
       // console.log(res)
       const data = res.data.data
       // 有些歌曲有版权，无法播放 返回空数据

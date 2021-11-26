@@ -2,16 +2,16 @@ const isProd = process.env.NODE_ENV === "production";
 
 module.exports = {
     devServer:{
-        "proxy": {
-            "/api": {
-                // "target": "http://h5sm.com:8088",
-                "target": "http://localhost:3000",
-                "changeOrigin": true, // 开启跨域. 默认情况下，代理时会保留主机头的来源,设置为 true 以覆盖此行为
-                "pathRewrite": { "^/api" : "" },
-                // ws: true,        //如果要代理 websockets，配置这个参数
-                // secure: false,  // 如果是https接口，需要配置这个参数
-            }
-        }
+        // "proxy": {
+        //     "/api": {
+        //         "target": "http://musicapi.h5sm.com",
+        //         // "target": "http://musicapi.h5sm.com",
+        //         "changeOrigin": true, // 开启跨域. 默认情况下，代理时会保留主机头的来源,设置为 true 以覆盖此行为
+        //         "pathRewrite": { "^/api" : "" },
+        //         // ws: true,        //如果要代理 websockets，配置这个参数
+        //         // secure: false,  // 如果是https接口，需要配置这个参数
+        //     }
+        // }
     },
     pluginOptions: {
         electronBuilder: {

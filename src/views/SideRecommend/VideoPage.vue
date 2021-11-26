@@ -52,6 +52,7 @@ import {ref,reactive,toRefs,onMounted,onUnmounted,watch,watchEffect} from "vue"
 
 
 import VideoItem from "@/components/BasicSider/VideoItem"
+import {api} from "@/utils/baseProxy"
 
 export default {
     name: "VideoPage",
@@ -70,7 +71,7 @@ export default {
 
         // 视频分类
         const getVideoCate = async ()=>{
-            const res = await $axios.get('/api/video/group/list')
+            const res = await $axios.get(api + '/video/group/list')
             if ( res.data.data.length ){
                 videoData.videoCate = res.data.data
                 videoData.page ++
@@ -81,7 +82,7 @@ export default {
         // 视频列表
         const getVideo = async ()=>{
             try {
-                const res = await $axios.get('/api/video/group?id='+videoData.groupId+'&_='+new Date().getTime())
+                const res = await $axios.get(api + '/video/group?id='+videoData.groupId+'&_='+new Date().getTime())
                 const list = res.data.datas
 
                 if ( videoData.hasmore ){

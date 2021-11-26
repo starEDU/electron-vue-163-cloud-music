@@ -126,6 +126,7 @@
 <script>
 
 import secondFormat from 'second-format'
+import {api} from "@/utils/baseProxy"
 export default {
     name: "RankListPage",
     alias: '排行榜',
@@ -222,14 +223,14 @@ export default {
         },
         // 榜单
         async getTopListData(){
-            const response = await $axios.get('/api/toplist/detail')
+            const response = await $axios.get(api + '/toplist/detail')
             const result =  response.data
             // console.log(result)
             this.topList = result.list
         },
         // 歌曲列表
         async getSongList(id=19723756){
-            const response = await $axios.get('/api/playlist/detail?id='+id)
+            const response = await $axios.get(api + '/playlist/detail?id='+id)
             const result =  response.data
             // console.log(result)
             // console.log(result.playlist.tracks)

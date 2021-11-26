@@ -116,6 +116,7 @@ import {
 import {useStore,} from "vuex"
 
 import webCookie from "js-cookie"
+import {api} from "@/utils/baseProxy"
 
 
 export default {
@@ -145,7 +146,7 @@ export default {
                 const userInfoRes = webCookie.getJSON('userInfo')
                 userInfo.userInfo = userInfoRes
                 const getUserDetail = async ()=>{
-                    const res = await $axios.get(`/api/user/detail?uid=${userInfoRes.userId}`)
+                    const res = await $axios.get(`${api}/user/detail?uid=${userInfoRes.userId}`)
                     // console.log(res)
                     if (res.status === 200 && res.data.code === 200){
                         const {level,profile:{eventCount,newFollows, followeds,privateCount}} = res.data

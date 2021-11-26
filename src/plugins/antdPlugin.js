@@ -84,7 +84,6 @@ import {
     DoubleRightOutlined,
     WomanOutlined,
     ManOutlined,
-
 }  from "@ant-design/icons-vue"
 
 import MenuIcon from "../components/MenuIcon/MenuIcon"

@@ -52,6 +52,7 @@ import SearchBox from "@/components/BasicHeader/SearchBox"
 import UserInfo from "@/components/BasicHeader/UserInfo"
 import ThemeSet from "@/components/BasicHeader/ThemeSet"
 import FrameActionButton from "@/components/BasicHeader/FrameActionButton"
+import {api} from "@/utils/baseProxy"
 
 
 
@@ -64,7 +65,7 @@ export default {
         // 退出登录  注销
         const handleLogout = async () => {
             try {
-                const res = await $axios.get('/api/logout')
+                const res = await $axios.get(api + '/logout')
                 if ( res.status === 200 ){
                     webCookie.clear()
                     commit('setIsLogin',false)

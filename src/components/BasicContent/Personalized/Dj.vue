@@ -14,6 +14,7 @@
 <script>
 import {reactive,onMounted,} from "vue"
 import DjItem from "@/components/BasicContent/Personalized/DjItem"
+import {api} from "@/utils/baseProxy"
 
 export default {
     name: "Dj",
@@ -22,7 +23,7 @@ export default {
         const list = reactive([])
 
         onMounted(async ()=>{
-            const res = await $axios.get('/api/dj/hot')
+            const res = await $axios.get(api + '/dj/hot')
             // console.log(res.data.djRadios)
             list.push(...res.data.djRadios)
         })

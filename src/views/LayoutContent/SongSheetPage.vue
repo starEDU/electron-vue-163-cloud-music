@@ -37,6 +37,7 @@
 import {reactive,ref,watchEffect,} from "vue"
 import ListItem from "@/components/BasicContent/Personalized/ListItem"
 import Tags from "@/components/BasicContent/SongSheet/Tags"
+import {api} from "@/utils/baseProxy"
 
 export default {
     name: "SongSheetPage",
@@ -57,14 +58,14 @@ export default {
 
         async function getSongSheetList(){
             const res1 = await $axios.get(
-                `/api/top/playlist?cat=${cat.value}&limit=50&offset=${pagination.offset}`
+                `${api}/top/playlist?cat=${cat.value}&limit=50&offset=${pagination.offset}`
             )
             // console.log(res1.data)
             Object.assign(playlists,res1.data)
         }
 
         async function getSongSheetHot(){
-            const res2 = await $axios.get(`/api/playlist/hot`)
+            const res2 = await $axios.get(`${api}/playlist/hot`)
             tags.push(...res2.data.tags)
         }
 

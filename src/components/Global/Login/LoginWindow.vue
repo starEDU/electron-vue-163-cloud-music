@@ -8,7 +8,7 @@
         <div class="userInputArea">
             <div class="login-wrapper">
                 <div class="mphone">
-                    <a href="javascript:;" class="number-area" >
+                    <a class="number-area" href="javascript:">
                         <span class="current">+86</span>
                         <i class="toggle"></i>
                     </a>
@@ -39,6 +39,7 @@ import webCookie from 'js-cookie'
 import {
     Modal,
 } from "ant-design-vue"
+import {api} from "@/utils/baseProxy"
 
 
 export default {
@@ -67,7 +68,7 @@ export default {
             const {phone,password} = this
 
             try {
-                const  response = await $axios.get(`/api/login/cellphone?phone=${phone}&password=${password}`)
+                const  response = await $axios.get(`${api}/login/cellphone?phone=${phone}&password=${password}`)
                 const result = response.data
 
                 if ( response.status === 200 && result.code === 200 ){
@@ -92,10 +93,9 @@ export default {
                     this.phone = ''
                     this.password = ''
                 }else {
-                    console.log('')
                     Modal.warn({
                         title: "登录失败",
-                        content: '请重新登录'
+                        content: `code:${result.code},msg:${result.msg},请重新登录`
                     })
 
                 }
@@ -139,7 +139,7 @@ export default {
                 function autoCenter(){
                     oLoginface.style.left = (document.documentElement.clientWidth - oLoginface.offsetWidth)/2 + 'px';
                     oLoginface.style.top = (document.documentElement.clientHeight-oLoginface.offsetHeight)/2 + 'px';
-                };
+                }
 
 
                 var prevX = 0;
@@ -215,7 +215,7 @@ export default {
                             iSpeedY *= 0.75;
                             iSpeedX *= 0.75;
 
-                        };
+                        }
 
                         oLoginface.style.left = L + 'px';
                         oLoginface.style.top = T + 'px';
@@ -226,7 +226,7 @@ export default {
                         }
 
                     },30);
-                };
+                }
 
             }
         }

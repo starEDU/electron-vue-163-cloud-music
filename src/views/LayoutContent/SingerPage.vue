@@ -20,7 +20,6 @@
                     <ul class="item">
                         <li>
                             <a
-                                href="javascript:;"
                                 class="name"
                                 v-for="sub in item.types"
                                 :key="sub.type"
@@ -41,10 +40,10 @@
             <!--字母表-->
             <ul class="initial" ref="initial">
                 <li @click="handleLetter(-1,$event)">
-                    <a href="javascript:;" class="hot" code="-1">热门</a>
+                    <a href="javascript:" class="hot" code="-1">热门</a>
                 </li>
                 <li v-for="(item,index) in az" :key="index" @click="handleLetter(item,$event)">
-                    <a href="javascript:;" :code="item">{{item}}</a>
+                    <a href="javascript:" :code="item">{{item}}</a>
                 </li>
 
                 <li @click="handleLetter(0,$event)">
@@ -59,8 +58,8 @@
                     <li v-if="index<10" :key="item.id">
                         <div class="pic" :title="item.name" >
                             <img
-                                :src="item['img1v1Url']"
-                                v-lazy="item['img1v1Url']"
+                                :src="item['img1v1Url']+'?param=160y160'"
+                                v-lazy="item['img1v1Url']+'?param=160y160'"
                                 alt=""
                             />
                             <p class="bgImg"></p>
@@ -206,7 +205,7 @@ export default {
             this.initial = initial
             this.cateType = cateType
 
-            const response = await fetch('http://h5sm.com:8088/artist/list?type='+type+'&area='+area+'&initial='+initial+'&limit=100')
+            const response = await fetch('/api/artist/list?type='+type+'&area='+area+'&initial='+initial+'&limit=100')
             const result = await response.json()
             this.singerList = result.artists
         },

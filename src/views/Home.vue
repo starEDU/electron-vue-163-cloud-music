@@ -38,6 +38,7 @@
 
         <Player :width="width" :height="height" @isFullScreen="isFullScreen"/>
 
+        <Dance v-show="danceLyric"/>
     </a-layout>
 </template>
 
@@ -56,11 +57,12 @@ import BottomPlayBar from "@/components/Global/BottomBar/BottomPlayBar"
 import BottomSideFullScreen from "@/components/BasicSider/BottomSideFullScreen"
 import Player from "@/components/Global/Play/Player"
 import LoginWindow from "@/components/Global/Login/LoginWindow"
+import Dance from "@/components/Global/Dance"
 
 
 export default {
     name: 'Home',
-    components: {LoginWindow, Player, BottomSideFullScreen, BottomPlayBar, BasicSiderIndex, BasicHeaderIndex,},
+    components: {Dance, LoginWindow, Player, BottomSideFullScreen, BottomPlayBar, BasicSiderIndex, BasicHeaderIndex,},
     setup(){
         const {state} = useStore()
 

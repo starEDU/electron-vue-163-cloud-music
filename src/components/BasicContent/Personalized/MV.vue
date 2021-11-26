@@ -29,6 +29,7 @@ import {reactive,onMounted,} from "vue"
 
 
 import ListItem from "@/components/BasicContent/Personalized/ListItem"
+import {api} from "@/utils/baseProxy"
 
 export default {
     name: "MV",
@@ -39,7 +40,7 @@ export default {
 
 
         onMounted(async ()=>{
-            const res = await $axios.get('/api/personalized/mv')
+            const res = await $axios.get(api + '/personalized/mv')
             // 数据 push的方式 触发页面更新
             list.push(...res.data.result)
 

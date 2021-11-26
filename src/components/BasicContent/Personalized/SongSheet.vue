@@ -38,6 +38,7 @@ import {useRouter,} from "vue-router"
 
 
 import ListItem from "@/components/BasicContent/Personalized/ListItem"
+import {api} from "@/utils/baseProxy"
 
 
 export default {
@@ -63,7 +64,7 @@ export default {
 
         onMounted(()=>{
             (async ()=>{
-                const res = await $axios.get('/api/personalized?limit=9')
+                const res = await $axios.get(api + '/personalized?limit=9')
                 songSheetList.push(...res.data.result)
             })()
         })

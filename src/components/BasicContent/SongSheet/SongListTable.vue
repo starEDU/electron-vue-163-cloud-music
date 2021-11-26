@@ -21,6 +21,7 @@ import {Modal} from "ant-design-vue"
 import secondFormat from "second-format"
 
 import {useStore,} from "vuex"
+import {api} from "@/utils/baseProxy"
 
 
 export default {
@@ -51,7 +52,6 @@ export default {
                 title: "歌手",
                 dataIndex: "ar",
                 customRender: ({text, record,}) => {
-
                     return text ? getSinger(text) : getSinger(record['artists'])
                 }
             },
@@ -132,12 +132,12 @@ export default {
 
                 if (props.id){
 
-                    const res = await $axios.get('/api/playlist/detail?id=' + props.id)
+                    const res = await $axios.get(api + '/playlist/detail?id=' + props.id)
                     songList.songList = res.data.playlist['tracks']
                 }
                 if(!isNaN(props.type)){
 
-                    const res = await $axios.get('/api/top/song?type='+props.type)
+                    const res = await $axios.get(api + '/top/song?type='+props.type)
                     // console.log(res)
 
                     songList.songList = res.data.data

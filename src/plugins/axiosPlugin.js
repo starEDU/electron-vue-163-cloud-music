@@ -10,7 +10,7 @@ import {Modal} from "ant-design-vue"
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 let config = {
-  // baseURL: process.env.baseURL || process.env.apiUrl || "http://h5sm.com:8088",
+  baseURL: process.env.baseURL || process.env.apiUrl || "http://musicapi.h5sm.com",
   timeout: 60 * 1000, // Timeout
   withCredentials: true, // Check cross-site Access-Control
 };
@@ -38,7 +38,7 @@ _axios.interceptors.response.use(
   },
   function(error) {
     // console.log(error.response)
-    if (error.response) {
+    if (error.response)   {
       let res = error.response;
       // console.log(res)
       // console.log(error.message)
@@ -64,7 +64,7 @@ _axios.interceptors.response.use(
           break;
         case 403:
           Modal.warn({
-            title: "权限不足",
+            title: "权限不足,拒绝访问",
             content: res.statusText + '，' + error.message
           })
           break;
@@ -90,6 +90,12 @@ _axios.interceptors.response.use(
         case 501:
           Modal.warn({
             title: "帐号不存在",
+            content: res.statusText + '，' + error.message
+          })
+          break;
+        case 502:
+          Modal.warn({
+            title: "密码错误",
             content: res.statusText + '，' + error.message
           })
           break;

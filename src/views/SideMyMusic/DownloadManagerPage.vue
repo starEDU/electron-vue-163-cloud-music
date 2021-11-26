@@ -12,7 +12,7 @@
 
                 <a-divider style="background: #ccc"/>
 
-                <TableDataComp :song-list="songList"/>
+                <TableDataComp :songList="songList"/>
 
             </a-tab-pane>
 
